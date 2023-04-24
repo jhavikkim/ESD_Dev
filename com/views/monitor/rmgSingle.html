@@ -1,0 +1,371 @@
+<!-- Custom styling -->
+<style>.px-nav {
+    background-color: #0E365B;
+}
+.px-nav-toggle {
+    background-color: #0E365B;
+}
+.panel-bg {
+  background-color: #DDD;
+}
+
+.px-content-bg {
+  background-color: #EFEFEF;
+}
+
+.modal-header {
+  background-color: #DDD !important;
+  border-color: #DDD !important;
+}
+
+.btn-label, .modal-title, .popover-title {
+  color: #333;
+}
+
+.modal-body {
+  background-color: #EFEFEF;
+}
+
+.btn-primary {
+    background-color: #0E365B !important;
+    border-color: #0E3658;
+}
+
+button.panel-btn {
+  background-color: transparent !important;
+}
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  background-color: transparent !important;
+}
+
+    .btn-default {
+        color: #444;
+        background-color: #FFF;
+        border-color: #FFF;
+    }
+
+    .btn-default,
+    .btn-primary,
+    .btn-success,
+    .btn-info,
+    .btn-warning,
+    .btn-danger {
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        -moz-box-shadow:    0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        box-shadow:         0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    }
+
+
+    .bg-primary {
+        background-color: #0E365B !important;
+        border-color: #0E3658;
+    }
+
+    .btn-primary {
+        background-color: #0E365B !important;
+        border-color: #0E3658;
+    }
+    
+    .table-filter, .table-filter-last {
+      margin-bottom: 0px;
+    }
+
+    .panel-heading {
+        padding: 5px 10px;
+    }
+
+    .panel-heading .panel-title {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .panel-heading.with_zigbee .panel-title {
+        width: calc(100% - 37px);
+      }
+
+      .panel-heading.with_info .panel-title {
+        width: calc(100% - 37px);
+      }
+
+      .panel-heading.with_zigbee.with_info .panel-title {
+        width: calc(100% - 72px);
+      }
+  
+    .panel-item {
+        box-shadow: 2px 3px 0px 0px #e3e3e3;
+        background-color: #EFEFEF;
+        border: none !important;
+    }
+
+    .panel-location {
+        width: 100%;
+        height: 32px;
+        padding: 5px 0 !important;
+        overflow: hidden;
+    }
+  
+    .warning-value {
+      background: rgba(255, 208, 85, 0.8);
+    }
+  
+    .danger-value {
+        background: rgba(255, 0, 0, 0.8);
+    }
+  
+    .offline {
+      background: rgba(0, 0, 0, 0.3);
+      color: rgba(0, 0, 0, 0.2);
+    }
+  
+    .chart-content-height{
+      height: 220px;
+      width: 100%;
+    }
+  
+    .daterangepicker {
+      z-index: 9999;
+    }
+
+    /* list item icons */
+  .listItemSm {
+    display: inline-block;
+    width: 40px;
+    height: auto;
+    margin: 0 10px 10px 0;
+  }
+
+  .listItemSm .itemIcon {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+    /* zigbee signal */
+    .zigbeeSignal {
+    display: inline-block;
+    vertical-align: middle;
+    height: 15px;
+    margin-right: 10px;
+    }
+
+    .zigbeeSignal .bar {
+        display: inline-block;
+        border: 1px solid #74D770;
+        width: 4px;
+    height: 15px;
+    margin: -1px -2px 0 0;
+    padding: 0;
+    line-height: 1;
+    background-color: #74D770;
+    }
+
+    .zigbeeSignal .b1 {
+    height: 3px;
+    }
+
+    .zigbeeSignal .b2 {
+    height: 6px;
+    }
+
+    .zigbeeSignal .b3 {
+    height: 9px;
+    }
+
+    .zigbeeSignal .b4 {
+    height: 12px;
+    }
+
+    .zigbeeSignal .b5 {
+    height: 15px;
+    }
+
+    .zigbeeSignal_4 .b5.bar,
+    .zigbeeSignal_3 .b5.bar,
+    .zigbeeSignal_3 .b4.bar,
+    .zigbeeSignal_2 .b5.bar,
+    .zigbeeSignal_2 .b4.bar,
+    .zigbeeSignal_2 .b3.bar,
+    .zigbeeSignal_1 .b5.bar,
+    .zigbeeSignal_1 .b4.bar,
+    .zigbeeSignal_1 .b3.bar,
+    .zigbeeSignal_1 .b2.bar {
+        background-color: transparent;
+    }
+</style>
+  <!-- / Custom styling -->
+<ol class="breadcrumb page-breadcrumb m-b-0">
+    <li class="active">接地感測列表</li>
+    <span class="active" style="float: right">顯示設備數量：<span ng-bind="result.length"></span></span>
+    <span class="active" style="float: right">
+        <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+        ng-click="fanCtrl.orderByColume('location')">地點</button>
+    </span>
+    <span class="active" style="float: right">
+        <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+        ng-click="fanCtrl.orderByColume('name')">名稱</button>
+    </span>
+    <span class="active" style="float: right">
+        <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+        ng-click="fanCtrl.orderByColume('uid')">時間</button>
+    </span>
+    <span class="active" style="float: right">排序：</span>
+    <span class="active m-l-2" style="float: right"> ｜ </span>
+    <span class="active" style="float: right">狀態：
+      [<span>正常</span>] [<span class="warning-value">告警</span>] [<span class="danger-value">警示</span>] 
+      [<span style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 0, 0, 0.8);">離線</span>] [<span style="background: rgba(0, 0, 0, 0.3);">暫停</span>]
+    </span>
+</ol>
+
+<div class="page-header m-t-0">
+    <div class="row">
+
+        <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+            <div class="form-group table-filter">
+                <input type="text" class="form-control" id="search_input" placeholder="智慧搜尋" ng-model="rmgCtrl.searchText">
+            </div>
+        </div>
+
+        <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+            <div class="form-group table-filter">
+                <ui-select multiple ng-model="rmgCtrl.searchLocation.location" class="ui-select-primary">
+                <ui-select-match placeholder="所有地點">
+                    <span>{{$item}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (rmgCtrl.locationData | filter: $select.search) track by item">
+                    <span ng-bind="item"></span>
+                </ui-select-choices>
+                <ui-select-no-choice>
+                    沒有地點可顯示
+                </ui-select-no-choice>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-bg m-b-0 m-t-2">
+    <div class="panel-body">
+        <div class="row">
+            
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6" ng-repeat="viewData in rmgCtrl.viewData | filter: rmgCtrl.searchText | searchFilter: rmgCtrl.searchLocation.locatio" ng-show="viewData.isfan == -1">
+                <div class="panel panel-item" ng-class="{ 'danger-value': viewData.status==3, 'offline': viewData.pause==1}">
+                    <div class="panel-heading bg-primary with_info" ng-class="{'with_zigbee': viewData.isZigbee==1}">
+                        <div class="zigbeeSignal {{'zigbeeSignal_' + viewData.zigbeeSignalLayer}}" ng-show="viewData.isZigbee==1" value="{{viewData.zigbeeSignal}}" title="Zigbee Signal">
+                            <div class="b1 bar"></div>
+                            <div class="b2 bar"></div>
+                            <div class="b3 bar"></div>
+                            <div class="b4 bar"></div>
+                            <div class="b5 bar"></div>
+                        </div>
+                        <span class="panel-title h3 font-size-16" ng-bind="viewData.name" title="{{viewData.name}}"></span>
+                        <button class="btn btn-sm btn-outline" style="float: right" ng-hide="auth<2" ng-click="rmgCtrl.getRMGContent(viewData.uid)">
+                            <i class="fa fa-info" style="color: #fff"></i>
+                        </button>
+                    </div>
+                    <div class="panel-body p-t-2" style="height: 60px">
+                        <div class="text-xs-center" style="line-height: 50px;">
+                          <span class="font-size-46 font-weight-bold" ng-bind="viewData.value"></span>
+                          <span class="font-size-28 font-weight-bold" ng-bind="viewData.unit"></span>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="height: 77px">
+                        <div class="box-cell border-panel font-size-16" style="border: 1px solid">
+                            <div class="box-container" style="height: 40px">
+                                <div class="box-row">
+                                    <div class="box-cell p-y-1 valign-middle text-center">
+                                        報警設定值 <span ng-bind="viewData.alert_max"></span><span ng-bind="viewData.unit"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body p-y-0">
+                        <button type="button" class="btn btn-default btn-block panel-btn" ng-click="rmgCtrl.closeRMGAlarm(viewData.uid, viewData.rmip, viewData.port, viewData.rmID, $event)" value="{{viewData.buzzerState == 1 ? '1' : '0'}}" ng-disabled="{{viewData.pause==1}}">{{viewData.buzzerState == 1 ? '關閉警報' : '開啟警報' }}</button>
+                    </div>
+                    <div class="panel-body p-y-1 bg-transparent text-center panel-location" title="{{viewData.location}}">
+                        <span class="panel-title"><i class="panel-title-icon fa fa-map-marker"></i>
+                          <span ng-bind="viewData.location"></span>
+                          <!-- <span ng-bind="viewData.location1"></span>-<span ng-bind="viewData.location"></span>-<span ng-bind="viewData.location3"></span> -->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- RMG Modal -->
+<div class="modal fade" id="modal-rmg" tabindex="-1" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-warning">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">接地感測器</span></h4>
+        </div>
+        <div class="modal-body p-b-0">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+                        <button daterangepicker locale="daterangepickerLocale" 
+                                    start-date="setups.range.startDate" end-date="setups.range.endDate" 
+                                    ranges="rmgCtrl.ranges" callback="rmgCtrl.rangeCallback" 
+                                    id="rmgdaterangepicker-btn" class="btn btn-outline dropdown-toggle daterangepicker-filter">
+                        </button>
+                        
+                        <button class="btn btn-success" ng-click="rmgCtrl.getRmgReport()">下載數據報表</button>
+                        <button class="btn btn-success" ng-click="rmgCtrl.getRmgAlarmReport()">下載Alarm報表</button>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 form-group">
+                    <div class="col-md-2">
+                        <b><p class="form-control-static">設備名稱</p></b>
+                    </div>
+                    <div class="col-md-4">
+                        <b><p class="form-control-static">Channel位置</p></b>
+                    </div>
+                    <div class="col-md-3">
+                        <b><p class="form-control-static">報警設定值</p></b>
+                    </div>
+                    <div class="col-md-3">
+                        <b><p class="form-control-static">Channel暫停</p></b>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 form-group" ng-repeat="rmgData in rmgCtrl.rmData.rmglist">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" style="background: rgba(227, 243, 245, 0.938)" ng-model="rmgData.name">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" style="background: rgba(227, 243, 245, 0.938)" ng-model="rmgData.location">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" min="0.4" max="12.0" class="form-control" ng-model="rmgData.alert_max">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="checkbox">
+                            <label>
+                              <input type="checkbox" ng-model="rmgData.pause" ng-true-value="1" ng-false-value="0"> 勾選以暫停
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="rmgCtrl.rmData.mute" ng-true-value="1" ng-false-value="0"> 勾選以關閉蜂鳴器
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="rmgCtrl.modifyRMGContent()">儲存並關閉</button>
+            </div>
+        </div>
+    </div>
+</div>

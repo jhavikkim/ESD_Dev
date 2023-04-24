@@ -1,0 +1,771 @@
+<!-- Custom styling -->
+<style>
+  .panel-bg {
+    background-color: #DDD;
+  }
+
+  .px-content-bg {
+    background-color: #EFEFEF;
+  }
+
+  .modal-header {
+    background-color: #DDD !important;
+    border-color: #DDD !important;
+  }
+
+  .btn-label, .modal-title, .popover-title {
+    color: #333;
+  }
+
+  .modal-body {
+    background-color: #EFEFEF;
+  }
+
+  .bg-primary {
+      background-color: #0E365B !important;
+      border-color: #0E365B !important;
+  }
+
+  .btn-primary {
+      background-color: #0E365B !important;
+      border-color: #0E3658;
+  }
+
+  button.panel-btn {
+    background-color: transparent !important;
+  }
+
+  .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    background-color: transparent !important;
+  }
+
+  .panel-item {
+    border: none !important;
+  }
+
+  .panel-item .btn-default {
+    color: #444;
+    background-color: transparent !important;
+    border-color: #FFF;
+  }
+
+  .btn-default,
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-warning,
+  .btn-danger {
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      -moz-box-shadow:    0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      box-shadow:         0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  }
+
+  .table-filter, .table-filter-last {
+    margin-bottom: 0px;
+  }
+
+  .panel-item {
+    box-shadow: 2px 3px 0px 0px #e3e3e3;
+    background-color: #EFEFEF;
+  }
+
+  .panel-heading {
+    padding: 5px 10px;
+  }
+
+  .panel-heading .panel-title {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .panel-heading.with_zigbee .panel-title {
+    width: calc(100% - 37px);
+  }
+
+  .panel-heading.with_info .panel-title {
+    width: calc(100% - 37px);
+  }
+
+  .panel-heading.with_zigbee.with_info .panel-title {
+    width: calc(100% - 72px);
+  }
+
+  .panel_content {
+    position: relative;
+    height: 135px;
+    padding: 5px 20px;
+  }
+
+  .panel_content .equip_image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+
+  .panel-location {
+    width: 100%;
+    height: 32px;
+    padding: 5px 0 !important;
+    overflow: hidden;
+  }
+
+  .warning-value {
+    background: rgba(155, 153, 149, 0.8);
+  }
+
+  .danger-value {
+    background: rgba(255, 0, 0, 0.8);
+  }
+
+  .pause {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.2);
+  }
+
+  .offline {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 0, 0, 0.2);
+    border: 3px solid rgba(255, 0, 0, 0.3);
+  }
+
+  .chart-content-height{
+    height: 220px;
+    width: 100%;
+  }
+
+  .daterangepicker {
+    z-index: 9999;
+  } 
+
+.counter { 
+  display: inline-flex;
+  cursor:pointer;
+  width:10%;
+  height:10%;
+  max-width:100%;
+  position:relative;
+  justify-content:center;
+  align-items:center;
+  font-size: calc(1em + 1vmin);
+  transition: height .2s ease-in-out;
+  background: #fff;
+  border-radius:50%;
+  box-shadow:0px 1px 10px 2px rgba(0,0,0,0.2);
+  margin:1em 0;
+}
+.percentage {
+  position:absolute;
+  text-align:center;
+  top:50%;
+  left:0;
+  right:0;
+  vertical-align:middle;
+  transform:translate3d(0,-50%,0);
+}
+#balanceChartLabelWrapper {
+    position: absolute;
+    left: 85px;
+    width: 20px;
+    height: 155px;
+    margin-top: 1px;
+    padding-right: 5px;
+    border-right: 1px solid #DDD;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+}
+
+#balanceChartLabelWrapper .chart_label {
+    line-height: 0.71;
+    transform: scale(0.5);
+    display: block;
+}
+
+#balanceChartLabelWrapper .chart_label.plus {
+      font-size: 25px;
+      margin: -4px -2px 0 0;
+      line-height: 0.6;
+  }
+
+  #balanceChartLabelWrapper .chart_label.minus {
+      font-size: 30px;
+      margin: -5px -1px 0 0;
+  }
+
+canvas {
+  position:absolute;
+  top:0;
+  left:0;
+}
+input {
+    width: 200px;
+}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+body {
+  font-family: 'Open Sans', sans-serif;
+  /* text-align:center; */
+}
+
+/*End Circular progress bar */
+
+@keyframes
+toggle { 0% {
+ opacity:0;
+}
+ 100% {
+  opacity:1;
+  }
+}
+
+/* list item icons */
+.listItemSm {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: auto;
+    margin: 0 10px 10px 0;
+  }
+
+  .listItemSm .itemIcon {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .listItemSm .itemIndex {
+    position: absolute;
+    border: 1px solid #000;
+    top: 1px;
+    left: 1px;
+    background-color: #FFF;
+    color: #000;
+    text-align: center;
+    line-height: 1;
+    padding: 1px;
+  }
+
+
+/* zigbee signal */
+.zigbeeSignal {
+  display: inline-block;
+  vertical-align: middle;
+  height: 15px;
+  margin-right: 10px;
+}
+
+.zigbeeSignal .bar {
+	display: inline-block;
+	border: 1px solid #74D770;
+	width: 4px;
+  height: 15px;
+  margin: -1px -2px 0 0;
+  padding: 0;
+  line-height: 1;
+  background-color: #74D770;
+}
+
+.zigbeeSignal .b1 {
+  height: 3px;
+}
+
+.zigbeeSignal .b2 {
+  height: 6px;
+}
+
+.zigbeeSignal .b3 {
+  height: 9px;
+}
+
+.zigbeeSignal .b4 {
+  height: 12px;
+}
+
+.zigbeeSignal .b5 {
+  height: 15px;
+}
+
+.zigbeeSignal_4 .b5.bar,
+.zigbeeSignal_3 .b5.bar,
+.zigbeeSignal_3 .b4.bar,
+.zigbeeSignal_2 .b5.bar,
+.zigbeeSignal_2 .b4.bar,
+.zigbeeSignal_2 .b3.bar,
+.zigbeeSignal_1 .b5.bar,
+.zigbeeSignal_1 .b4.bar,
+.zigbeeSignal_1 .b3.bar,
+.zigbeeSignal_1 .b2.bar {
+	background-color: transparent;
+}
+
+.daterangepicker-filter {
+  background-color: #FEFEFE !important;
+}
+  
+.daterangepicker .calendar th, .daterangepicker select:focus, .dropzone-box.dz-drag-hover, .timepicker-decrement:focus, .timepicker-decrement:hover, .timepicker-increment:focus, .timepicker-increment:hover {
+  border-color: #0E365B;
+}
+
+.daterangepicker .calendar td.active, .daterangepicker .calendar th, .daterangepicker .ranges .active, .daterangepicker .ranges li:focus, .daterangepicker .ranges li:hover, .px-irs-primary .irs-from, .px-irs-primary .irs-single, .px-irs-primary .irs-to {
+  background-color: #0E365B;
+}
+
+.daterangepicker .calendar thead tr+tr th {
+  background-color: #0E365B !important;
+  border-top-color: #0E365B !important;
+}
+</style>
+<!-- / Custom styling -->
+
+<ol class="breadcrumb page-breadcrumb m-b-0">
+  <li class="active">靜電風扇列表</li>
+  <span class="active m-l-2" style="float: right">顯示設備數量：<span ng-bind="result.length"></span></span>
+  <span class="active m-l-2" style="float: right"> ｜ </span>
+  <span class="active" style="float: right">
+    <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+    ng-click="fanCtrl.orderByColume('location')">地點</button>
+  </span>
+  <span class="active" style="float: right">
+    <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+    ng-click="fanCtrl.orderByColume('name')">名稱</button>
+  </span>
+  <span class="active" style="float: right">
+    <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+    ng-click="fanCtrl.orderByColume('uid')">時間</button>
+  </span>
+  <span class="active m-l-2" style="float: right">排序：</span>
+</ol>
+
+<div class="page-header m-t-0" ng-show="fanCtrl.viewData.length <= 12">
+  <div class="row">
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <input type="text" class="form-control" id="search_input" placeholder="智慧搜尋" ng-model="fanCtrl.searchText.$">
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <ui-select multiple ng-model="fanCtrl.searchLocation.location" class="ui-select-primary">
+          <ui-select-match placeholder="所有地點">
+            <span>{{$item}}</span>
+          </ui-select-match>
+          <ui-select-choices repeat="item in (fanCtrl.locationData | filter: $select.search) track by item">
+            <span ng-bind="item"></span>
+          </ui-select-choices>
+          <ui-select-no-choice>
+            沒有地點可顯示
+          </ui-select-no-choice>
+        </ui-select>
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <button daterangepicker locale="daterangepickerLocale" 
+                          start-date="setups.range.startDate" end-date="setups.range.endDate" 
+                          ranges="fanCtrl.ranges" callback="fanCtrl.rangeCallback"
+                          id="daterangepicker-fan" class="btn btn-default dropdown-toggle daterangepicker-filter">
+        <button class="btn btn-success m-r-2" ng-click="fanCtrl.downloadFanHistoryCSV()">匯出資料</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-bg m-b-0 m-t-2">
+  <div class="panel-body">
+    <div class="row">
+      <a ui-sref="main.fanSingle({searchText:viewData.name})" class="listItemSm" ng-class="{'item_danger': viewData.value==5}" ng-repeat="viewData in fanCtrl.viewData | filter: fanCtrl.searchText | 
+      searchFilter: fanCtrl.searchLocation.location | searchFilter: fanCtrl.searchModel.model as result" ng-init="fanCtrl.searchText.use=1" ng-show="viewData.use==1 && fanCtrl.viewData.length > 12" title='{{viewData.name}}'>
+        <img src="images/equip/icons/rmi/fan/offline.png" class="itemIcon" alt="viewData.name" ng-show="(viewData.isfan == 1 || viewData.isfan == 2) && viewData.value==0">
+        <img src="images/equip/icons/rmi/fan/online.png" class="itemIcon" alt="viewData.name" ng-show="(viewData.isfan == 1 || viewData.isfan == 2) && viewData.value==1">
+        <img src="images/equip/icons/rmi/fan/danger.png" class="itemIcon" alt="viewData.name" ng-show="(viewData.isfan == 1 || viewData.isfan == 2) && viewData.value==5">
+        <img src="images/equip/icons/rmi/bar/offline.png" class="itemIcon" alt="viewData.name" ng-show="viewData.isfan == 3 && viewData.value==0">
+        <img src="images/equip/icons/rmi/bar/online.png" class="itemIcon" alt="viewData.name" ng-show="viewData.isfan == 3 && viewData.value==1">
+        <img src="images/equip/icons/rmi/bar/danger.png" class="itemIcon" alt="viewData.name" ng-show="viewData.isfan == 3 && viewData.value==5">
+        <span class="itemIndex">{{$index+1}}</span>
+      </a>
+      <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6" ng-repeat="viewData in fanCtrl.viewData | filter: fanCtrl.searchText | 
+      searchFilter: fanCtrl.searchLocation.location | searchFilter: fanCtrl.searchModel.model as result" ng-init="fanCtrl.searchText.use=1" ng-show="viewData.use==1 && fanCtrl.viewData.length <= 12">
+
+        <div class="panel panel-item" style="height: 290px" ng-show="viewData.isfan == 1 || viewData.isfan == 3" ng-class="{'danger-value': viewData.value==5}">
+          <div class="panel-heading bg-primary with_info" ng-class="{'with_zigbee': viewData.isZigbee==1}">          
+            <div class="zigbeeSignal {{'zigbeeSignal_' + viewData.zigbeeSignalLayer}}" ng-show="viewData.isZigbee==1" value="{{viewData.zigbeeSignal}}" title="Zigbee Signal">
+                <div class="b1 bar"></div>
+                <div class="b2 bar"></div>
+                <div class="b3 bar"></div>
+                <div class="b4 bar"></div>
+                <div class="b5 bar"></div>
+            </div>
+            <span class="panel-title h3 font-size-16" ng-bind="viewData.name" title="{{viewData.name}}"></span>
+            <button class="btn btn-sm btn-outline" style="float: right" ng-click="fanCtrl.getListContent(viewData.uid, viewData.isfan)" value="{{viewData.uid}}" ng-hide="auth<2">
+              <i class="fa fa-info" style="color: #fff"></i>
+            </button>
+          </div>
+
+          <div class="panel-body p-y-0 panel_content" style="height: 105px" >
+            <div class="text-xs-center">
+              <img ng-src="{{viewData.photo}}" class="equip_image" style="height: 90px">
+            </div>
+          </div>
+          <div class="panel-body p-y-0" style="height: 55px">
+            <div class="row">
+              <div class="col-xs-8">
+                <button type="button" class="btn btn-block" 
+                        ng-click="fanCtrl.setPower(viewData.uid, viewData.port, viewData.rmIP, viewData.rmID, viewData.isfan, 1)"
+                        ng-class="{ 'btn-primary': viewData.value==1 || viewData.value==5 , 'btn-default': viewData.value!=1 && viewData.value!=5 }">啟動</button>
+                <button type="button" class="btn btn-block"
+                        ng-click="fanCtrl.setPower(viewData.uid, viewData.port, viewData.rmIP, viewData.rmID, viewData.isfan, 0)"
+                        ng-class="{ 'btn-primary': viewData.value==0, 'btn-default': viewData.value!=0 }">關閉</button>
+              </div>
+              <div class="col-xs-4">
+                <button type="button" class="btn btn-block " style="min-height: 67px; text-align: center"
+                        ng-class="{ 'btn-primary': viewData.value==3, 'btn-default': viewData.value!=3 }" 
+                        ng-click="fanCtrl.setPower(viewData.uid, viewData.port, viewData.rmIP, viewData.rmID, viewData.isfan, 3)">清 <br>潔 </button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body p-b-0">
+            <button type="button" class="btn btn-block btn-default panel-btn" 
+                    ng-click="fanCtrl.cleanAlarmLed(viewData.uid, viewData.rmIP, viewData.port, viewData.rmID)" ng-disabled="{{viewData.value==0 || viewData.value==5}}">關閉警報</button>
+          </div>
+          <div class="panel-body p-y-1 bg-transparent text-center panel-location" title="{{viewData.location}}">
+            <span class="panel-title"><i class="panel-title-icon fa fa-map-marker"></i>
+              <span ng-bind="viewData.location1"></span>-<span ng-bind="viewData.location2"></span>-<span ng-bind="viewData.location3"></span>
+            </span>
+          </div>
+        </div>
+        <div class="panel panel-item" style="height: 290px" ng-show="viewData.isfan == 2" ng-class="{'danger-value': viewData.value==5}">
+          <div class="panel-heading bg-primary with_info" ng-class="{'with_zigbee': viewData.isZigbee==1}">
+            <div class="zigbeeSignal {{'zigbeeSignal_' + viewData.zigbeeSignalLayer}}" ng-show="viewData.isZigbee==1" value="{{viewData.zigbeeSignal}}" title="Zigbee Signal">
+              <div class="b1 bar"></div>
+              <div class="b2 bar"></div>
+              <div class="b3 bar"></div>
+              <div class="b4 bar"></div>
+              <div class="b5 bar"></div>
+            </div>
+            <span class="panel-title h3 font-size-16" ng-bind="viewData.name" title="{{viewData.name}}"></span>
+            <button class="btn btn-sm btn-outline" style="float: right" ng-click="fanCtrl.getListContent(viewData.uid, viewData.isfan)" value="{{viewData.uid}}" ng-hide="auth<2">
+              <i class="fa fa-info" style="color: #fff"></i>
+            </button>
+          </div>
+
+          <div class="panel-body  p-y-0 panel_content">
+            <div class="row">  
+              <div class="col-xs-12">
+                <!--   fanCtrl.itemData.Speed   -->
+                <section class="p{{viewData.Speed}}">
+                  <p class="circle-label">Fan Speed</p>
+                  <div class="circle-wrap">
+                    <div class="circle">
+                      <div class="mask full">
+                        <div class="fill"></div>
+                      </div>
+                      <div class="mask half">
+                        <div class="fill"></div>
+                      </div>
+                      <div class="inside-circle">{{viewData.Speed}}%</div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="col-xs-12">
+                <!--   fanCtrl.itemData.Balance   -->
+                <div class="balance_bar">
+                  <div class="barLabel_wrapper">
+                    <span class="barLabel minus">-</span>
+                    <span class="barLabel zero">▾</span>
+                    <span class="barLabel plus">+</span>
+                  </div>
+                  <div class="bar_wrapper">
+                    <div class="bar b{{viewData.Balance + 5}}"></div>
+                  </div>
+                </div>
+              </div> 
+            </div>   
+          </div>
+
+          <div class="panel-body p-y-1" style="height: 70px">
+            <div class="row">
+              <div class="col-xs-8">
+                <button type="button" class="btn btn-block" 
+                        ng-click="fanCtrl.setPower(viewData.uid, viewData.port, viewData.rmIP, viewData.rmID, viewData.isfan, 1)"
+                        ng-class="{ 'btn-primary': viewData.value==1, 'btn-default': viewData.value!=1 }">啟動</button>
+                <button type="button" class="btn btn-block"
+                        ng-click="fanCtrl.setPower(viewData.uid, viewData.port, viewData.rmIP, viewData.rmID, viewData.isfan, 0)"
+                        ng-class="{ 'btn-primary': viewData.value==0, 'btn-default': viewData.value!=0 }">關閉</button>
+              </div>
+              <div class="col-xs-4">
+                <button type="button" class="btn btn-block " style="min-height: 67px; text-align: center"
+                        ng-class="{ 'btn-primary': viewData.value==3, 'btn-default': viewData.value!=3 }" 
+                        ng-click="fanCtrl.setPower(viewData.uid, viewData.port, viewData.rmIP, viewData.rmID, viewData.isfan, 3)">清 <br>潔 </button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body p-y-1 bg-transparent text-center panel-location" title="{{viewData.location}}">
+            <span class="panel-title"><i class="panel-title-icon fa fa-map-marker"></i>
+              <span ng-bind="viewData.location1"></span>-<span ng-bind="viewData.location2"></span>-<span ng-bind="viewData.location3"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DFan Settings -->
+<div class="modal" id="modal-modify">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">修改資訊</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">                
+          <div class="form-group  p-y-0 ">
+            <label class="col-xs-2 control-label">RM Type</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="fanCtrl.itemData.rmType"></p>
+            </div>
+            <label class="col-xs-2 control-label">RM Fan</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="fanCtrl.itemData.port"></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">RM IP</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="fanCtrl.itemData.rmIP" disabled>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">設備名稱</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="fanCtrl.itemData.name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label"> 清潔週期 (Hr)</label>
+            <div class="col-md-3">
+              <input id="cleanTimer" type="number" placeholder="Clean Time" class="form-control valign-middle text-center" min="1" max="200" ng-model="fanCtrl.itemData.Timer">
+            </div>
+            <label class="col-md-3 control-label"> 風速 (%)</label>
+            <div class="col-md-4">
+              <input id="FanSpeed" type="number" placeholder="Speed level" class="form-control valign-middle text-center" min="0" max="100" ng-model="fanCtrl.itemData.Speed">
+            </div>
+          </div>
+          <div class="form-group  p-y-0 ">
+
+            <div class="col-md-6">
+              <label class="col-xs-6 control-label-left">上次清潔時間 :</label>
+              <div class="col-xs-6 p-b-0 ">
+                <p class="form-control-static" ng-bind="fanCtrl.itemData.LastClean"></p>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="col-xs-6 control-label-left">下次清潔時間 :</label>
+              <div class="col-xs-6 p-b-0 ">
+                <p class="form-control-static" ng-bind="fanCtrl.itemData.NextClean"></p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-8  p-y-0 ">
+            <div class="col-md-8 text-center">
+              <label class="text-md-center"> 設備位置 </label>
+            </div>
+            <div class="col-sm-12 form-group">
+              <div class="col-md-3">
+                <input type="input" class="form-control" ng-model="fanCtrl.itemData.location1">
+              </div>
+              <div class="col-md-3">
+                <input type="input" class="form-control" ng-model="fanCtrl.itemData.location2">
+              </div>
+              <div class="col-md-6">
+                <input type="input" class="form-control" ng-model="fanCtrl.itemData.location3">
+              </div>
+            </div>              
+          </div>
+                
+          <div class="form-group">
+            <div class="col-xs-4 text-center">
+              <label class="text-md-center">啟用</label>
+            </div>
+            <div class="col-md-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="fanCtrl.itemData.use" ng-true-value="1" ng-false-value="0"> 勾選以啟用
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body p-y-1 text-right">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="fanCtrl.modifyDFanContent()">儲存並關閉</button>
+      </div>
+      <div class="modal-body p-y-0">
+        <div class="panel-body">
+          <ul class="nav nav-tabs" ng-init="tabsDrdnActive = 1">
+            <li ng-class="{active: tabsDrdnActive === 1}" class="active">
+              <a href="" ng-click="tabsDrdnActive = 1">
+                歷史平衡度查詢 
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content tab-content-bordered">
+            <div class="tab-pane fade in active" ng-class="{'in active': tabsDrdnActive === 1}">
+              <div style="height: 32px">
+                <div class="form-group table-filter">
+                  <button daterangepicker locale="daterangepickerLocale" 
+                          start-date="setups.range.startDate" end-date="setups.range.endDate" 
+                          ranges="fanCtrl.ranges" callback="fanCtrl.rangeCallback" 
+                          id="daterangepicker-btn" class="btn btn-outline dropdown-toggle daterangepicker-filter">
+                  </button>
+                </div>
+              </div>
+              <div id="balanceChartLabelWrapper">
+                <span class="chart_label plus">+</span>
+                <span class="chart_label label_text L5">L5</span>
+                <span class="chart_label label_text L4">L4</span>
+                <span class="chart_label label_text L3">L3</span>
+                <span class="chart_label label_text L2">L2</span>
+                <span class="chart_label label_text L1">L1</span>
+                <span class="chart_label zero">0</span>
+                <span class="chart_label label_text L1">L1</span>
+                <span class="chart_label label_text L2">L2</span>
+                <span class="chart_label label_text L3">L3</span>
+                <span class="chart_label label_text L4">L4</span>
+                <span class="chart_label label_text L5">L5</span>
+                <span class="chart_label minus">-</span>
+              </div>
+              <div class="chart-content-height" id="balance-chart">
+              </div>
+              <div style="height: 32px" class="text-right m-t-1">
+                <button type="button" class="btn btn-success m-r-2" ng-click="fanCtrl.downloadBalanceCSV(fanCtrl.itemData.name, fanCtrl.itemData.uid, fanCtrl.itemData.rmIP, fanCtrl.itemData.port)">匯出</button>             
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fan / Bar Settings -->
+<div class="modal" id="fanModal-modify">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">修改資訊</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">                
+          <div class="form-group">
+            <label class="col-xs-2 control-label">RM Type</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="fanCtrl.itemData.rmType"></p>
+            </div>
+            <label class="col-xs-2 control-label">RM Fan</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="fanCtrl.itemData.port"></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">RM IP</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="fanCtrl.itemData.rmIP" disabled>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Name</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="fanCtrl.itemData.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-8">
+              <label class="col-xs-6 control-label-left">Last clean :</label>
+              <div class="col-xs-6">
+                <p class="form-control-static" ng-bind="fanCtrl.itemData.LastClean"></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="checkbox"  ng-show="fanCtrl.itemData.rmType == 'RMI-LAN' " >
+                <label>
+                  <input type="checkbox" ng-model="fanCtrl.itemData.isNC" ng-true-value="1" ng-false-value="0" ng-disabled="auth<3" > isNC :
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="col-md-8 text-center">
+              <label class="text-md-center"> Location </label>
+            </div>
+            <div class="col-sm-12 form-group">
+              <div class="col-md-3">
+                <input type="input" class="form-control" ng-model="fanCtrl.itemData.location1">
+              </div>
+              <div class="col-md-3">
+                <input type="input" class="form-control" ng-model="fanCtrl.itemData.location2">
+              </div>
+              <div class="col-md-6">
+                <input type="input" class="form-control" ng-model="fanCtrl.itemData.location3">
+              </div>
+            </div>              
+          </div>
+                
+          <div class="form-group">
+            <div class="col-xs-4 text-center">
+              <label class="text-md-center">啟用</label>
+            </div>
+            <div class="col-md-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="fanCtrl.itemData.use" ng-true-value="1" ng-false-value="0"> 勾選以啟用
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body p-y- text-right">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="fanCtrl.modifyContent()">儲存並關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alert Modal -->
+<div id="modal-edit-alert" class="modal fade modal-alert modal-danger">
+  <div class="modal-dialog" style="margin: 25% auto">
+    <div class="modal-content">
+      <div class="modal-header"><i class="fa fa-times-circle"></i></div>
+      <div class="modal-title">rmIP重複</div>
+      <div class="modal-body">請重新輸入</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

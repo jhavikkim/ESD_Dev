@@ -1,0 +1,352 @@
+<!-- Custom styling -->
+<style>
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9 {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    body {
+        position: absolute;
+        background-image: url('images/dashboard_bg.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .px-nav-left, .px-navbar {
+        display: none !important;
+    }
+
+    .px-content {
+        margin: 0 !important;
+        padding: 20px 11px 0;
+        background-color: transparent;
+        color: #FFF;
+    }
+
+    .panel, .panel-footer {
+        margin-bottom: 0;
+        background-color: transparent;
+    }
+
+    .page-header {
+        position: relative;
+        margin-bottom: 0;
+        text-align: center;
+        background-color: rgba(51,51,51,0.7) !important;
+    }
+
+    .page-header h1 {
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .page-header .btn-outline {
+        background-color: #FFF;
+    }
+
+    .page-header #device_dropdown {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    .page-header #device_dropdown ul.dropdown-menu {
+       min-width: 108px;
+        background-color: rgba(0,0,0,0.8);
+        border-color: #333;
+    }
+
+    .page-header #device_dropdown ul>li>a {
+        color: #FFF;
+    }
+
+    .page-header #device_dropdown ul>li>a:hover {
+        background-color: rgba(50,50,50,0.8);
+    }
+
+    .panel-dashboard {
+        position: relative;
+        padding: 4px 0;
+        border: 0;
+        z-index: 1;
+    }
+
+    .panel-dashboard h2 {
+        margin: 0;
+        padding: 10px 0;
+        text-align: center;
+        background-color: rgba(51,51,51,0.7);
+        color: #FFF;
+    }
+
+    .chart_content {
+        width: 100%;
+        height: 340px;
+    }
+
+    .chart_content.alertList {
+        position: relative;
+	    overflow: hidden;
+        height: 276px;
+    }
+
+    .chart_content.alertList .marquee_wrapper {
+        position: absolute;
+        width: 100%;
+    }
+    .chart_content.alertList .marquee_wrapper .marquee_item {
+        display: block;
+        overflow: hidden;	/* 超出範圍的部份要隱藏 */
+        height: 92px;
+        text-decoration: none;
+    }
+
+    #inUseTable {
+        height: 340px;
+        background-color: rgba(51,51,51,0.7);
+        margin-bottom: 4px;
+    }
+
+    #inUseTable, #inUseTable th, #inUseTable tr, #inUseTable td {
+        padding: 14px 0;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #FFF;
+        border: 0;
+    } 
+
+    #inUseTable thead th {
+        padding: 16px 0;
+    }
+
+    #inUseTable th, #inUseTable tr, #inUseTable td {
+        width: 20%;
+    }
+
+    #inUseTable .signal_value {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    #inUseTable .signal_light {
+        display: inline-block;
+        vertical-align: middle;
+        width: 18px;
+        height: 18px;
+        margin-left: 5px;
+        border-radius: 50%;
+    }
+
+    #inUseTable .signal_light.online {
+        background-color: #00B050;
+    }
+
+    #inUseTable .signal_light.alarm {
+        background-color: rgb(255,0,0);
+    }
+
+    #inUseTable .signal_light.offline {
+        background-color: #A5A5A5;
+    }
+
+    #alert_list {
+        margin: 0 auto;
+        overflow: hidden;
+        background-color: rgba(51,51,51,0.7);
+    }
+
+    #alert_list a:hover {
+        cursor: default;
+    }
+
+    #alert_list::-webkit-scrollbar {
+        display: none;
+    }
+
+    #alert_list .widget-notifications-item {
+        padding: 5px 15px;
+        border: 0;
+    }
+
+    #alert_list .widget-notifications-description, #alert_list .widget-notifications-date{
+        color: #FFF;
+    }
+
+    #clock_wrapper {
+        position: absolute;
+        width: 150px;
+        top: 5px;
+        right: 20px;
+        text-align: right;
+        line-height: 1.5;
+    }
+
+    #clock_wrapper #time, #clock_wrapper #meridiem {
+        display: inline-block;
+        vertical-align: baseline;
+    }
+
+    #clock_wrapper #time {
+        font-size: 26px;
+    }
+
+    #clock_wrapper #meridiem {
+        font-size: 15px;
+    }
+
+    #clock_wrapper #dayName {
+        font-size: 13px;
+    }
+
+    #dashboard_logo {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        height: 65px; 
+
+    }
+</style>
+<!-- / Custom styling -->
+
+<div class="page-header">
+    <h1>ESD Monitoring data center</h1>
+    <div class="dropdown" id="device_dropdown">
+        <button class="dropdown-toggle btn btn-outline" data-toggle="dropdown">Device type</button>
+        <ul class="dropdown-menu">
+          <li><a class="mouse-hover" href="#/monitor">ESD</a></li>
+          <li><a class="mouse-hover" href="#/fan">Ion</a></li>
+          <li><a class="mouse-hover" href="#/rmg">GRD</a></li>
+        </ul>
+    </div>
+    <div id="clock_wrapper">
+        <div class="clock_inner">
+            <div class="dispClock">
+                <div id="meridiem">星期</div>
+                <div id="time">88:88:88</div>
+            </div>
+        </div>
+        <div id="dayIntro">
+            <p id="dayName">2021, 9月18日, 星期一</p>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-dashboard">
+    <div class="panel-cotnent devicesRating row">
+        <div class="col-sm-12 col-lg-12 col-xl-5">
+            <h2>Connected Devices</h2>
+            <table class="table" id="inUseTable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Online</th>
+                    <th scope="col">Alarm</th>
+                    <th scope="col">Offline</th>
+                    <th scope="col">In use Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">ESD</th>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmDefault ? dashCtrl.realTimeData[0].rmDefault : '0'}}</span>
+                        <span class="signal_light online"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmAlarm ? dashCtrl.realTimeData[0].rmAlarm : '0'}}</span>
+                        <span class="signal_light alarm"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmOff ? dashCtrl.realTimeData[0].rmOff : '0'}}</span>
+                        <span class="signal_light offline"></span>
+                    </td>
+                    <td><span class="signal_value">{{rmInUseRate}}%</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Ion</th>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmiDefault ? dashCtrl.realTimeData[0].rmiDefault : '0'}}</span>
+                        <span class="signal_light online"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmiAlarm ? dashCtrl.realTimeData[0].rmiAlarm : '0'}}</span>
+                        <span class="signal_light alarm"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmiOff ? dashCtrl.realTimeData[0].rmiOff : '0'}}</span>
+                        <span class="signal_light offline"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{rmiInUseRate}}%</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">GRD</th>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmgDefault ? dashCtrl.realTimeData[0].rmgDefault : '0'}}</span>
+                        <span class="signal_light online"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmgAlarm ? dashCtrl.realTimeData[0].rmgAlarm : '0'}}</span>
+                        <span class="signal_light alarm"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{dashCtrl.realTimeData[0].rmgOff ? dashCtrl.realTimeData[0].rmgOff : '0'}}</span>
+                        <span class="signal_light offline"></span>
+                    </td>
+                    <td>
+                        <span class="signal_value">{{rmgInUseRate}}%</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="col-sm-12 col-lg-6 col-xl-3">
+            <h2>In Use Rate</h2>
+            <div class="chart_content inUse" id="inUse-chart"></div>
+        </div>
+        <div class="col-sm-12 col-lg-6 col-xl-4">
+            <h2>Realtime devices Alarm Rate</h2>
+            <div class="chart_content realTime" id="realTime-chart"></div>
+        </div>
+    </div>
+    <div class="panel-cotnent periodStatus row">
+        <div class="col-sm-12 col-lg-6 col-xl-3">
+            <h2>Daily Status</h2>
+            <div class="chart_content daily" id="daily-chart"></div>
+        </div>
+        <div class="col-sm-12 col-lg-6 col-xl-3">
+            <h2>Weekly Status</h2>
+            <div class="chart_content weekly" id="weekly-chart"></div>
+        </div>
+        <div class="col-sm-12 col-lg-6 col-xl-3">
+            <h2>Monthly Status Rate</h2>
+            <div class="chart_content monthly" id="monthly-chart"></div>
+        </div>
+        <div class="col-sm-12 col-lg-6 col-xl-3">
+            <h2>Alert List</h2>
+            <div class="chart_content alertList" id="alert_list">
+                <div class="marquee_wrapper">
+                    <div ng-repeat="alertList in dashCtrl.alertLists" class="widget-notifications-item marquee_item" on-finish-render="ngRepeatFinished">
+                        <div class="widget-notifications-title text-warning font-size-16" ng-show="alertList.status==2">告警</div>
+                        <div class="widget-notifications-title text-danger font-size-16" ng-show="alertList.status==3 || alertList.status==5">警示</div>
+                        <div class="widget-notifications-title text-danger bg-default font-size-16" style="width: 34px" ng-show="alertList.status==4">離線</div>
+                        <div class="widget-notifications-description"><strong ng-bind="alertList.name"></strong></div>
+                        <div class="widget-notifications-location" ng-bind="alertList.location ? alertList.location : '--'"></div>
+                        <div class="widget-notifications-date" ng-bind="alertList.datatime ? alertList.datatime : '--'"></div>
+                        <div class="widget-notifications-icon fa fa-warning bg-warning" ng-show="alertList.status==2"></div>
+                        <div class="widget-notifications-icon fa fa-bomb bg-danger" ng-show="alertList.status==3 || alertList.status==5"></div>
+                        <div class="widget-notifications-icon fa fa-times-circle-o bg-danger" ng-show="alertList.status==4"></div>
+                    </div>
+                </div>
+            </div>
+            <img src="images/Company-logo.png" id="dashboard_logo" alt="">
+        </div>
+    </div>
+</div>

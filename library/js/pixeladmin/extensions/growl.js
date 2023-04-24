@@ -1,0 +1,1 @@
+!function(e){"use strict";if(!e.growl)throw new Error("jquery.growl.js required.");e.growl.success=function(r){return e.growl(e.extend({title:"Success!",style:"success"},r||{}))}}(jQuery);

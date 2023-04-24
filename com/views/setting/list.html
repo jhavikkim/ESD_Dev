@@ -1,0 +1,457 @@
+<!-- Custom styling -->
+<style>
+  .panel-bg {
+    background-color: #DDD;
+  }
+
+  .px-content-bg {
+    background-color: #EFEFEF;
+  }
+
+  .modal-header {
+    background-color: #DDD !important;
+    border-color: #DDD !important;
+  }
+
+  .btn-label, .modal-title, .popover-title {
+    color: #333;
+  }
+
+  .modal-body {
+    background-color: #EFEFEF;
+  }
+
+  .btn-primary {
+    background-color: #0E365B !important;
+    border-color: #0E365B;
+  }
+
+  .table-primary .table, .table-primary.table {
+    border-top-color: #0e365B !important;
+  }
+
+  .table-primary thead th, .table-primary thead tr {
+    background-color: #0e365B !important;
+  }
+
+  .table-primary .table-header, .table-primary thead, .table-primary thead th, .table-primary thead tr {
+    border-color: #0e365B !important;
+  }
+
+  .table-primary {
+    background-color: #FEFEFE;
+  }
+  
+  .btn-default {
+    color: #444;
+    background-color: #FFF;
+    border-color: #FFF;
+  }
+
+  .btn-default,
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-warning,
+  .btn-danger {
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      -moz-box-shadow:    0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      box-shadow:         0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  }
+
+  table tbody {
+    display: block;
+    overflow-y: scroll;
+    max-height: calc( 100vh - 280px );
+  }
+
+  .table-filter, .table-filter-last {
+    margin-bottom: 0px;
+  }
+
+  .display-none {
+    display: block;
+  }
+
+  .mouse-hover {
+    cursor: pointer;
+  }
+
+  tr.tr-hover:hover {
+    cursor: pointer;
+    background-color: rgba(34, 116, 211, 0.1);
+  }
+
+  @media screen and (max-width: 543px) {
+    .table tbody {
+      height: calc( 100vh - 414px );
+    }
+    .tb-description {
+      width: 200px;
+    }
+    .table-responsive>.table>tbody>tr>td, 
+    .table-responsive>.table>tbody>tr>th, 
+    .table-responsive>.table>tfoot>tr>td, 
+    .table-responsive>.table>tfoot>tr>th, 
+    .table-responsive>.table>thead>tr>td, 
+    .table-responsive>.table>thead>tr>th {
+      white-space: normal;
+    }
+
+    .table-filter {
+      margin-bottom: 15px;
+    }
+
+    .display-none {
+      display: none;
+    }
+  }
+
+  table thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  table thead.item-list {
+    width: calc( 100% - 1em )
+  }
+
+</style>
+<!-- / Custom styling -->
+
+<ol class="breadcrumb page-breadcrumb">
+  <li class="active">設備一覽</li>
+</ol>
+
+<div class="page-header">
+  <div class="row">
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <input type="text" class="form-control" placeholder="智慧搜尋" ng-model="listCtrl.searchText.$">
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <ui-select multiple ng-model="listCtrl.searchLocation.location" class="ui-select-primary">
+          <ui-select-match placeholder="所有地點">
+            <span>{{$item}}</span>
+          </ui-select-match>
+          <ui-select-choices repeat="item in (listCtrl.locationData | filter: $select.search) track by item">
+            <span ng-bind="item"></span>
+          </ui-select-choices>
+          <ui-select-no-choice>
+            沒有地點可顯示
+          </ui-select-no-choice>
+        </ui-select>
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <ui-select multiple ng-model="listCtrl.searchModel.model" class="ui-select-primary">
+          <ui-select-match placeholder="所有設備">
+            <span>{{$item}}</span>
+          </ui-select-match>
+          <ui-select-choices repeat="item in (listCtrl.modelData | filter: $select.search) track by item">
+            <span ng-bind="item"></span>
+          </ui-select-choices>
+          <ui-select-no-choice>
+            沒有設備可顯示
+          </ui-select-no-choice>
+        </ui-select>
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter float-right" ng-hide="auth<3">
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-add">新增設備</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="panel panel-bg m-b-0">
+  <div class="panel-body">
+    <div class="table-responsive table-primary m-b-0">
+      <table class="table">
+        <thead class="item-list">
+          <tr>
+            <th class="mouse-hover" ng-click="listCtrl.orderByColume('name')">名稱</th>
+            <th class="mouse-hover" ng-click="listCtrl.orderByColume('rmID')">RMID</th>
+            <th class="mouse-hover" ng-click="listCtrl.orderByColume('port')">PORT</th>
+            <th class="mouse-hover" ng-click="listCtrl.orderByColume('rmIP')">RMIP</th>
+            <th class="mouse-hover" ng-click="listCtrl.orderByColume('model')">感測器類型</th>
+            <th>告警上下限</th>
+            <th>警示上下限</th>
+            <th class="mouse-hover" ng-click="listCtrl.orderByColume('location')">地點</th>
+            <th ng-click="listCtrl.orderByColume('use')" class="mouse-hover text-center" style="width: 60px">啟用</th>
+            <th ng-click="listCtrl.orderByColume('pause')" class="mouse-hover text-center" style="width: 60px">暫停</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr-hover" ng-repeat="itemData in listCtrl.itemData | orderBy: listCtrl.sortColumn: listCtrl.reverse | filter: listCtrl.searchText | searchFilter: listCtrl.searchLocation.location | searchFilter: listCtrl.searchModel.model as result " ng-click="listCtrl.getListContent(itemData.uid)">
+            <td ng-bind="itemData.name"></td>
+            <td ng-bind="itemData.rmID"></td>
+            <td ng-bind="itemData.port"></td>
+            <td ng-bind="itemData.rmIP"></td>
+            <td ng-bind="itemData.model"></td>
+            <td><span ng-bind="itemData.warning_max"></span>/<span ng-bind="itemData.warning_min"></span></td>
+            <td><span ng-bind="itemData.alert_max"></span>/<span ng-bind="itemData.alert_min"></span></td>
+            <td ng-bind="itemData.location"></td>
+            <td class="text-center" style="width: 60px"><span ng-show="itemData.use==1">V</span></td>
+            <td class="text-center" style="width: 60px"><span ng-show="itemData.pause==1">V</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 修改感測器 -->
+<div class="modal" id="modal-modify">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">修改資訊</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-xs-2 control-label">RM Type</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="listCtrl.sensorData.rmType"></p>
+            </div>
+            <label class="col-xs-2 control-label">RM Port</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="listCtrl.sensorData.port"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">RM IP</label>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="listCtrl.sensorData.rmIP">
+            </div>
+            <label class="col-md-2 control-label">RELAY ID</label>
+            <div class="col-md-4">
+              <select class="form-control" ng-model="listCtrl.sensorData.usbrelayid">
+                <option></option>
+                <option>USB01</option>
+                <option>USB02</option>
+                <option>USB03</option>
+                <option>USB04</option>
+                <option>USB05</option>
+                <option>USB06</option>
+                <option>USB07</option>
+                <option>USB08</option>
+                <option>USB09</option>
+                <option>USB10</option>
+                <option>USB11</option>
+                <option>USB12</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Name</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="listCtrl.sensorData.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Device</label>
+            <div class="col-md-4">
+              <p class="form-control-static" ng-bind="listCtrl.sensorData.model"></p>
+            </div>
+            <label class="col-md-2 control-label">Unit</label>
+            <div class="col-md-4">
+              <p class="form-control-static" ng-bind="listCtrl.sensorData.unit"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">告警上限</label>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="listCtrl.sensorData.warning_max" ng-disabled="listCtrl.sensorData.isfan==1">
+            </div>
+            <label class="col-md-2 control-label">告警下限</label>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="listCtrl.sensorData.warning_min" ng-disabled="listCtrl.sensorData.isfan==1">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">警示上限</label>
+            <div class="col-md-4">
+              <input type="number" min="0" max="2000" class="form-control" ng-model="listCtrl.sensorData.alert_max" ng-disabled="listCtrl.sensorData.isfan==1">
+            </div>
+            <label class="col-md-2 control-label">警示下限</label>
+            <div class="col-md-4">
+              <input type="number" min="-2000" max="0" class="form-control" ng-model="listCtrl.sensorData.alert_min" ng-disabled="listCtrl.sensorData.isfan==1">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+              <input type="checkbox" ng-model="listCtrl.isUpdate" ng-true-value="1" ng-false-value="0"> 同時更新硬體設定?
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Location</label>
+            <div class="col-md-3">
+              <input type="input" class="form-control" ng-model="listCtrl.sensorData.location1">
+            </div>
+            <div class="col-md-3">
+              <input type="input" class="form-control" ng-model="listCtrl.sensorData.location2">
+            </div>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="listCtrl.sensorData.location3">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">啟用</label>
+            <div class="col-md-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="listCtrl.sensorData.use" ng-true-value="1" ng-false-value="0"> 勾選以啟用
+                </label>
+              </div>
+            </div>
+            <label class="col-md-2 control-label">暫停</label>
+            <div class="col-md-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="listCtrl.sensorData.pause" ng-true-value="1" ng-false-value="0"> 勾選暫停收集數據
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="listCtrl.modifyContent()">儲存並關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新增設備 -->
+<div class="modal" id="modal-add">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">新增設備</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">RM Type</label>
+            <div class="col-md-10">
+              <select class="form-control" ng-model="listCtrl.rmData.rmType">
+                <option value="RM">RM</option>
+                <option value="RMI-C-H">RMI-C-H</option>
+                <option value="RMI-LAN">RMI-LAN</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">RM IP</label>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="listCtrl.rmData.rmIP">
+            </div>
+            <label class="col-md-2 control-label">RELAY ID</label>
+            <div class="col-md-4">
+              <select class="form-control" ng-model="listCtrl.rmData.usbRelayID">
+                <option></option>
+                <option>USB01</option>
+                <option>USB02</option>
+                <option>USB03</option>
+                <option>USB04</option>
+                <option>USB05</option>
+                <option>USB06</option>
+                <option>USB07</option>
+                <option>USB08</option>
+                <option>USB09</option>
+                <option>USB10</option>
+                <option>USB11</option>
+                <option>USB12</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Device</label>
+            <div class="col-md-10">
+              <select class="form-control" ng-model="listCtrl.rmData.device">
+                <option ng-show="listCtrl.rmData.rmType == 'RM'" value="rm1">RM1</option>
+                <option ng-show="listCtrl.rmData.rmType == 'RM'" value="rm2">RM2</option>
+                <option ng-show="listCtrl.rmData.rmType == 'RMI-C-H'" value="bar">Bar</option>
+                <option ng-show="listCtrl.rmData.rmType == 'RMI-C-H'" value="fan">Fan</option>
+                <option ng-show="listCtrl.rmData.rmType == 'RMI-C-H'" value="Dfan">DFan</option>
+                <option ng-show="listCtrl.rmData.rmType == 'RMI-C-H'" value="rmg">RMG</option>
+                <option ng-show="listCtrl.rmData.rmType == 'RMI-LAN'" value="eFan">eFan</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" ng-show="listCtrl.rmData.rmType == 'RMI-C-H'">
+            <label class="col-md-2 control-label">Channel</label>
+            <div class="col-md-2">
+              <select class="form-control" ng-model="listCtrl.rmData.ch">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <label class="col-md-2 control-label">Device ID</label>
+            <div class="col-md-2">
+              <input type="number" min="0" max="9999" class="form-control" ng-model="listCtrl.rmData.deviceID">
+            </div>
+            <label class="col-md-2 control-label">IsZigbee</label>
+            <div class="col-md-1">
+              <input type="checkbox" style="text-align:center; vertical-align:middle" ng-model="listCtrl.rmData.isZigbee" ng-true-value="1" ng-false-value="0">     
+            </div>
+            <!-- <div class="form-group col-md-4">
+              <div class="col-md-2">
+                <label class="col-md-2 control-label">isNC</div>
+                  <input type="checkbox" style="text-align:center; vertical-align:middle" ng-model="listCtrl.rmData.isNC" ng-true-value="0" ng-false-value="1">                 
+              </div>
+              <div class="col-md-2">
+                <label class="col-md-2 control-label">IsZigbee</label>
+                  <input type="checkbox" style="text-align:center; vertical-align:middle" ng-model="listCtrl.rmData.isZigbee" ng-true-value="1" ng-false-value="0">                 
+              </div>
+            </div>   -->
+
+          </div>
+          <!-- <div class="form-group" ng-show="listCtrl.rmData.rmType == 'RMI-LAN'">
+            <label class="col-md-2 control-label">isNC</label>
+            <div class="col-md-1">
+              <input type="checkbox" style="text-align:center; vertical-align:middle" ng-model="listCtrl.rmData.isNC" ng-true-value="0" ng-false-value="1"> 
+            </div>
+          </div> -->
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="listCtrl.addRM()">新增</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Alert Modal -->
+<div id="modal-alert" class="modal fade modal-alert modal-danger">
+  <div class="modal-dialog" style="margin: 25% auto">
+    <div class="modal-content">
+      <div class="modal-header"><i class="fa fa-times-circle"></i></div>
+      <div class="modal-title">IP重複</div>
+      <div class="modal-body">請重新輸入</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

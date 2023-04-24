@@ -1,0 +1,123 @@
+<!-- Custom styling -->
+<style>
+
+.px-nav {
+      background-color: #0E365B;
+  }
+  .px-nav-toggle {
+      background-color: #0E365B;
+  }
+  .panel-bg {
+    background-color: #DDD;
+  }
+
+  .px-content-bg {
+    background-color: #EFEFEF;
+  }
+
+  .modal-header {
+    background-color: #DDD !important;
+    border-color: #DDD !important;
+  }
+
+  .btn-label, .modal-title, .popover-title {
+    color: #333;
+  }
+
+  .modal-body {
+    background-color: #EFEFEF;
+  }
+
+  .btn-primary {
+    background-color: #0E365B !important;
+    border-color: #0E365B;
+  }
+
+  .table-primary .table, .table-primary.table {
+    border-top-color: #0e365B !important;
+  }
+
+  .table-primary thead th, .table-primary thead tr {
+    background-color: #0e365B !important;
+  }
+
+  .table-primary .table-header, .table-primary thead, .table-primary thead th, .table-primary thead tr {
+    border-color: #0e365B !important;
+  }
+
+  .table-primary {
+    background-color: #FEFEFE;
+  }
+
+  .page-signin-header,
+  .page-signin-container {
+    position: relative;
+    z-index: 10;
+  }
+
+  .page-signin-header {
+    box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
+  }
+
+  .page-signin-header .btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+  }
+
+  html[dir="rtl"] .page-signin-header .btn {
+    right: auto;
+    left: 15px;
+  }
+
+  .page-signin-container {
+    width: auto;
+    margin: 30px 10px;
+  }
+
+  .page-signin-container form {
+    border: 0;
+    box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
+  }
+
+  @media (min-width: 544px) {
+    .page-signin-container {
+      width: 350px;
+      margin: 60px auto;
+    }
+  }
+
+</style>
+<!-- / Custom styling -->
+
+<!-- Sign In form -->
+
+<div class="page-signin-container">
+  <form name="signInForm" ng-submit="loginCtrl.signIn()" class="panel p-a-4" novalidate>
+    <div class="p-a-2 text-sm-center">
+      <img src="images/logo-red.png" alt="">
+    </div>
+    <h2 class="authentication-v2-header m-t-2 m-b-4 text-xs-center font-weight-semibold font-size-20">
+      <p>威馳股份有限公司</p>
+      <p class="font-weight-semibold font-size-16">靜電監控設備平台</p>
+    </h2>
+
+    <div class="input-group input-group-lg m-b-3" ng-class="{ 'has-error': (signInForm.$submitted || signInForm.$touched) && signInForm.$invalid }">
+      <div class="input-group-addon p-t-0 p-b-0 p-l-2 p-r-2" style="background-color: transparent;"><img src="images/user.svg" style="width: 24px"></img></div>
+      <input ng-model="loginCtrl.credentials.userID" ng-focus="loginCtrl.loginFail = false" required minlength="3" maxlength="32" name="userID" type="text" class="form-control" placeholder="">
+    </div>
+
+    <div class="input-group input-group-lg m-b-3" ng-class="{ 'has-error': (signInForm.$submitted || signInForm.$touched) && signInForm.$invalid }">
+      <div class="input-group-addon p-t-0 p-b-0 p-l-2 p-r-2" style="background-color: transparent"><img src="images/key.svg" style="width: 24px"></img></div>
+      <input ng-model="loginCtrl.credentials.password" ng-focus="loginCtrl.loginFail = false" required minlength="6" maxlength="32" type="password" class="form-control" placeholder="">
+    </div>
+
+    <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">登入</button>
+
+    <div class="alert alert-danger alert-dark p-y-1 m-t-3 m-b-0" ng-show="((signInForm.$submitted || signInForm.$touched) && signInForm.$invalid) || loginCtrl.loginFail">
+      登入無效
+    </div>
+  </form>
+</div>
+
+<!-- / Sign In form -->

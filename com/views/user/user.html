@@ -1,0 +1,327 @@
+<!-- Custom styling -->
+<style>
+  .panel-bg {
+    background-color: #DDD;
+  }
+
+  .px-content-bg {
+    background-color: #EFEFEF;
+  }
+
+  .modal-header {
+    background-color: #DDD !important;
+    border-color: #DDD !important;
+  }
+
+  .btn-label, .modal-title, .popover-title {
+    color: #333;
+  }
+
+  .modal-body {
+    background-color: #EFEFEF;
+  }
+
+  .btn-primary {
+    background-color: #0E365B !important;
+    border-color: #0E365B;
+  }
+
+  .table-primary .table, .table-primary.table {
+    border-top-color: #0e365B !important;
+  }
+
+  .table-primary thead th, .table-primary thead tr {
+    background-color: #0e365B !important;
+  }
+
+  .table-primary .table-header, .table-primary thead, .table-primary thead th, .table-primary thead tr {
+    border-color: #0e365B !important;
+  }
+
+  .table-primary {
+    background-color: #FEFEFE;
+  }
+
+  table tbody {
+    display: block;
+    overflow-y: scroll;
+    max-height: calc( 100vh - 280px );
+  }
+
+  .table-filter, .table-filter-last {
+    margin-bottom: 0px;
+  }
+
+  .display-none {
+    display: block;
+  }
+
+  .mouse-hover {
+    cursor: pointer;
+  }
+
+  tr.tr-hover:hover {
+    cursor: pointer;
+    background-color: rgba(34, 116, 211, 0.1);
+  }
+
+  @media screen and (max-width: 543px) {
+    .table tbody {
+      height: calc( 100vh - 414px );
+    }
+    .tb-description {
+      width: 200px;
+    }
+    .table-responsive>.table>tbody>tr>td, 
+    .table-responsive>.table>tbody>tr>th, 
+    .table-responsive>.table>tfoot>tr>td, 
+    .table-responsive>.table>tfoot>tr>th, 
+    .table-responsive>.table>thead>tr>td, 
+    .table-responsive>.table>thead>tr>th {
+      white-space: normal;
+    }
+
+    .table-filter {
+      margin-bottom: 15px;
+    }
+
+    .display-none {
+      display: none;
+    }
+  }
+
+  table thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  table thead.item-list {
+    width: calc( 100% - 1em )
+  }
+
+</style>
+<!-- / Custom styling -->
+
+<ol class="breadcrumb page-breadcrumb">
+  <li class="active">使用者一覽</li>
+</ol>
+
+<div class="page-header">
+  <div class="row">
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <input type="text" class="form-control" placeholder="智慧搜尋" ng-model="userCtrl.searchText.$">
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <select class="form-control" ng-model="userCtrl.searchText.auth">
+          <option value="">帳號類型</option>
+          <option value="0">停用帳號</option>
+          <option value="1">一般帳號</option>
+          <option value="2">管理帳號</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter float-right">
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-add">新增使用者</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="panel panel-bg m-b-0">
+  <div class="panel-body">
+    <div class="table-responsive table-primary m-b-0">
+      <table class="table">
+        <thead class="item-list">
+          <tr>
+            <th class="mouse-hover">使用者</th>
+            <th class="mouse-hover">帳號</th>
+            <th class="mouse-hover">電郵(email)</th>
+            <th class="mouse-hover">聯絡電話</th>
+            <th class="mouse-hover">權限</th>
+            <!-- <th class="mouse-hover">上次登入時間</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr-hover" ng-repeat="usersData in userCtrl.usersData | filter: userCtrl.searchText" ng-click="userCtrl.getUserContent(usersData.uid)">
+            <td ng-bind="usersData.name"></td>
+            <td ng-bind="usersData.userID"></td>
+            <td ng-bind="usersData.email"></td>
+            <td ng-bind="usersData.phone"></td>
+            <td ng-bind="usersData.authStr"></td>
+            <!-- <td ng-bind="usersData.created"></td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 編輯使用者 -->
+<div class="modal" id="modal-modify">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">編輯使用者</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">使用者</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="userCtrl.userData.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">帳號</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="userCtrl.userData.userID">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">E-mail</label>
+            <div class="col-md-10">
+              <input type="email" class="form-control" ng-model="userCtrl.userData.email">
+              <!-- <input type="submit"> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">電話</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="userCtrl.userData.phone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">權限</label>
+            <div class="col-md-10">
+              <select class="form-control" ng-model="userCtrl.userData.auth">
+                <option value="">帳號類型</option>
+                <option value="0">停用帳號</option>
+                <option value="1">一般帳號</option>
+                <option value="2">管理帳號</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+              <button type="button" class="btn btn-warning btn-block" ng-click="userCtrl.resetPasswordAlert(userCtrl.userData.uid)">重置密碼</button>
+            </div>
+            <!-- <div class="col-md-5">
+              <button type="button" class="btn btn-danger btn-block" ng-click="userCtrl.deleteUserAlert(userCtrl.userData.uid)">刪除帳號</button>
+            </div> -->
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="userCtrl.modifyUser()">儲存並關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新增使用者 -->
+<div class="modal" id="modal-add">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">新增使用者</h4>
+      </div> 
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">使用者</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="userCtrl.newUser.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">帳號</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="userCtrl.newUser.userID">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">E-mail</label>
+            <div class="col-md-10">
+              <input type="email" class="form-control" ng-model="userCtrl.newUser.email">
+              <!-- <input type="submit"> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">電話</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="userCtrl.newUser.phone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">預設密碼</label>
+            <div class="col-md-10">
+              <p class="form-control-static" >00000000</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">權限</label>
+            <div class="col-md-10">
+              <select class="form-control" ng-model="userCtrl.newUser.auth">
+                <option value="0">停用帳號</option>
+                <option value="1">一般帳號</option>
+                <option value="2">管理帳號</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="userCtrl.addUser()">新增</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Alert Modal -->
+<div id="modal-reset-alert" class="modal fade modal-alert modal-warning">
+  <div class="modal-dialog" style="margin: 25% auto">
+    <div class="modal-content">
+      <div class="modal-header"><i class="fa fa-times-circle"></i></div>
+      <div class="modal-title">重置密碼</div>
+      <div class="modal-body">確認密碼重置為 00000000 ?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-warning" ng-click="userCtrl.resetPassword()">確定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-alert" class="modal fade modal-alert modal-danger">
+  <div class="modal-dialog" style="margin: 25% auto">
+    <div class="modal-content">
+      <div class="modal-header"><i class="fa fa-times-circle"></i></div>
+      <div class="modal-title">刪除使用者</div>
+      <div class="modal-body">確認要刪除帳號 ?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" ng-click="userCtrl.deleteUser()">確定</button>
+      </div>
+    </div>
+  </div>
+</div>

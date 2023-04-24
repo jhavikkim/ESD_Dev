@@ -1,0 +1,78 @@
+<style>
+  .navbar-header a, .px-navbar .navbar-nav a {
+    color: #000 !important;
+  }
+  .navbar-header {
+    background: #fff!important;
+    color: #000 !important;
+  }
+
+  .notice-alert {
+    background: rgba(255, 163, 163, 0.8);
+  }
+
+  .px-navbar, .px-navbar .navbar-collapse {
+    background-color: #DDD !important;
+  }
+
+  .navbar-header {
+    background-color: #DDD !important;
+  }
+
+</style>
+
+<!-- Header -->
+<div class="navbar-header">
+  <div class="navbar-brand">
+    <span class="font-weight-bold">靜電監控設備平台</span> - <span class="font-weight-light">威馳股份有限公司</span>
+  </div>
+</div>
+
+<!-- Navbar togglers -->
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu-collapse" aria-expanded="false">
+  <i class="navbar-toggle-icon"></i>
+</button>
+
+<div class="collapse navbar-collapse" id="navbar-menu-collapse">
+
+  <ul class="nav navbar-nav navbar-right p-r-0">
+    <li class="dropdown" ng-class="{ 'notice-alert': mainCtrl.noticeLists.length>0 }" ng-show="$state.current.name=='main.monitor' || $state.current.name=='main.rmg' || $state.current.name=='main.fan' || $state.current.name=='main.monitorSingle' || $state.current.name=='main.rmgSingle' || $state.current.name=='main.fanSingle'">
+      <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="px-navbar-icon fa fa-bullhorn font-size-14"></i>
+        <span class="px-navbar-icon-label">通知</span>
+        <span class="px-navbar-label label label-danger" ng-bind="mainCtrl.noticeLists.length"></span>
+      </a>
+      <div class="dropdown-menu p-a-0" style="width: 240px;">
+        <perfect-scrollbar style="height: 55vh; position: relative;">
+          <div ng-repeat="noticeList in mainCtrl.noticeLists" class="widget-notifications-item" ng-click="mainCtrl.toContentModal(noticeList.uid,noticeList.name,noticeList.isfan)">
+            <a href="javascript:void(0)">
+              <div class="widget-notifications-title text-warning font-size-16" ng-show="noticeList.status==2">告警</div>
+              <div class="widget-notifications-title text-danger font-size-16" ng-show="noticeList.status==3 || noticeList.status==5">警示</div>
+              <div class="widget-notifications-title text-danger bg-default font-size-16" style="width: 34px" ng-show="noticeList.status==4">離線</div>
+              <div class="widget-notifications-description"><strong ng-bind="noticeList.name"></strong></div>
+              <div class="widget-notifications-description" ng-bind="noticeList.location"></div>
+              <div class="widget-notifications-date" ng-bind="noticeList.datatime"></div>
+              <div class="widget-notifications-icon fa fa-warning bg-warning" ng-show="noticeList.status==2"></div>
+              <div class="widget-notifications-icon fa fa-bomb bg-danger" ng-show="noticeList.status==3 || noticeList.status==5"></div>
+              <div class="widget-notifications-icon fa fa-times-circle-o bg-danger" ng-show="noticeList.status==4"></div>
+            </a>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a href class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-user"></i>
+        <span class="hidden-md">&nbsp;&nbsp;<span ng-bind="name"></span></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li ng-hide="auth<3"><a class="mouse-hover" data-toggle="modal" data-target="#modal-edit-refresh"><i class="dropdown-icon fa fa-clock-o"></i>&nbsp;&nbsp;修改更新頻率</a></li>
+        <li ng-hide="auth<3" class="divider"></li>
+        <li><a class="mouse-hover" data-toggle="modal" data-target="#modal-edit-password" ng-click="mainCtrl.editPassword = { oldPassword: '', newPassword: '', rePassword: '' }"><i class="dropdown-icon fa fa-key"></i>&nbsp;&nbsp;修改密碼</a></li>
+        <li class="divider"></li>
+        <li><a href="javascript:void(0)" ng-click="mainCtrl.logout()"><i class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;登出</a></li>
+      </ul>
+    </li>
+
+  </ul>
+</div>

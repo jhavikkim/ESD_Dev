@@ -1,0 +1,74 @@
+<style>
+  .panel-bg {
+    background-color: #DDD;
+  }
+
+  .px-content-bg {
+    background-color: #EFEFEF;
+  }
+
+  .modal-header {
+    background-color: #DDD !important;
+    border-color: #DDD !important;
+  }
+
+  .btn-label, .modal-title, .popover-title {
+    color: #333;
+  }
+
+  .modal-body {
+    background-color: #EFEFEF;
+  }
+
+  .btn-primary {
+    background-color: #0E365B !important;
+    border-color: #0E365B;
+  }
+
+  .table-primary .table, .table-primary.table {
+    border-top-color: #0e365B !important;
+  }
+
+  .table-primary thead th, .table-primary thead tr {
+    background-color: #0e365B !important;
+  }
+
+  .table-primary .table-header, .table-primary thead, .table-primary thead th, .table-primary thead tr {
+    border-color: #0e365B !important;
+  }
+
+  .table-primary {
+    background-color: #FEFEFE;
+  }
+ .sys-form label{
+   margin-left: 20px;
+ }
+</style>
+
+<ol class="breadcrumb page-breadcrumb">
+  <li class="active">系統設定</li>
+</ol>
+
+<div class="panel panel-bg m-b-0">
+  <div class="panel-body">
+    <form name="sys-form" ng-submit="sysCtrl.saveSys()" class="panel p-a-4 sys-form" novalidate>
+      <div class="form-group form-group-lg">
+        <input type="checkbox" id="use-led" ng-model="sysCtrl.setData.useLedAlarm"><label for="use-led"> LED開關</label>
+      </div>
+      <div class="form-group form-group-lg">
+        <input type="checkbox" id="use-sound" ng-model="sysCtrl.setData.useSoundAlarm"><label for="use-sound"> 喇叭警示開關</label>
+      </div>
+      <div class="form-group form-group-lg">
+        <input type="checkbox" id="use-overwrite" ng-model="sysCtrl.setData.useOverwrite"><label for="use-overwrite"> 覆寫開關</label>(超過容量警示值時啟用)
+      </div>
+      <div class="form-group form-group-lg">
+        <label for="hd-limit"> 容量警示值：</label><input style="width:55px" type="text" id="hd-limit" ng-model="sysCtrl.setData.hdlimit"></label>Ｇ
+      </div>
+      <div>
+        <div>目前硬碟剩餘 {{sysCtrl.freeSpace}}</div>
+      </div>
+      <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">儲存</button>
+    </form>
+   </div>
+  </div>
+</div> 

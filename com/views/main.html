@@ -1,0 +1,131 @@
+<style>
+  .btn-default {
+    color: #444;
+    background-color: #FFF;
+    border-color: #FFF;
+  }
+
+  .btn-default,
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-warning,
+  .btn-danger {
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      -moz-box-shadow:    0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      box-shadow:         0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  }
+  .mouse-hover {
+    cursor: pointer;
+  }
+
+  th.mouse-hover:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  tr.tr-hover:hover {
+    background-color: rgba(103, 58, 183, 0.1);
+  }
+
+  .modal-display-top {
+    z-index: 1100 !important;
+  }
+
+  .modal-alert .modal-header {
+    padding: 10px 0;
+    font-size: 50px;
+    line-height: 50px;
+  }
+
+  .modal-alert .modal-title {
+    font-size: 26px;
+  }
+</style>
+
+<!-- Nav -->
+<px-nav class="px-nav-left px-nav-fixed" template-url="'com/views/nav.html'" />
+
+<!-- Navbar -->
+<px-navbar template-url="'com/views/navbar.html'" />
+
+<!-- Main view -->
+<div ui-view class="px-content px-content-bg"></div>
+
+<!-- Edit Refresh Times Modal -->
+<div class="modal fade" id="modal-edit-refresh" tabindex="-1" data-backdrop="static">
+  <div class="modal-dialog">
+    <form class="modal-content" name="changeTimesForm" ng-submit="mainCtrl.setRefleshTimes()">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">更改更新頻率</h4>
+      </div>
+      <div class="modal-body">
+        <div class="p-x-1">
+          <fieldset class="form-group form-group-lg">
+            <label for="refresh-times">更新頻率 ( 500 = 0.5秒 )</label>
+            <input type="number" class="form-control" id="refresh-times" required min="500" max="60000" ng-model="mainCtrl.refresh.times" 
+                  ng-class="{ 'has-error': (changeTimesForm.$submitted || changeTimesForm.$touched) && changeTimesForm.$invalid }">
+          </fieldset>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">確認</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Password Modal -->
+<div class="modal fade" id="modal-edit-password" tabindex="-1" data-backdrop="static">
+  <div class="modal-dialog">
+    <form class="modal-content" name="changePasswordForm" ng-submit="mainCtrl.changePassword()">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">修改密碼</h4>
+      </div>
+      <div class="modal-body">
+        <div class="p-x-1">
+          <fieldset class="form-group form-group-lg">
+            <label for="old-password">原密碼</label>
+            <input type="password" class="form-control" id="old-password" required minlength="6" maxlength="32" ng-model="mainCtrl.editPassword.oldPassword" 
+                  ng-class="{ 'has-error': (changePasswordForm.$submitted || changePasswordForm.$touched) && changePasswordForm.$invalid }">
+          </fieldset>
+          <fieldset class="form-group form-group-lg">
+            <label for="new-password">新密碼</label>
+            <input type="password" class="form-control" id="new-password" required minlength="6" maxlength="32" ng-model="mainCtrl.editPassword.newPassword"
+                  ng-class="{ 'has-error': (changePasswordForm.$submitted || changePasswordForm.$touched) && changePasswordForm.$invalid }">
+            <small class="text-muted">最少需有 6 個字元</small>
+          </fieldset>
+          <fieldset class="form-group form-group-lg">
+            <label for="re-password">再次輸入新密碼</label>
+            <input type="password" class="form-control" id="re-password" required minlength="6" maxlength="32" ng-model="mainCtrl.editPassword.rePassword"
+                  ng-class="{ 'has-error': (changePasswordForm.$submitted || changePasswordForm.$touched) && changePasswordForm.$invalid }">
+          </fieldset>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">確認</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="text/ng-template" id="ui-success-modal.html">
+  <div class="modal-header"><i class="fa fa-check-circle"></i></div>
+  <div class="modal-title" ng-bind="modalCtrl.modalStatus"></div>
+  <div class="modal-body" ng-bind="modalCtrl.modalMessage"></div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="modalCtrl.cancel()">OK</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="ui-warning-modal.html">
+  <div class="modal-header"><i class="fa fa-warning"></i></div>
+  <div class="modal-title" ng-bind="modalCtrl.modalStatus"></div>
+  <div class="modal-body" ng-bind="modalCtrl.modalMessage"></div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="modalCtrl.cancel()">OK</button>
+  </div>
+</script>

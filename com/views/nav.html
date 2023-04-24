@@ -1,0 +1,66 @@
+<style>
+  .px-nav{
+    color: #545d64;
+      background-color: #0E365B;
+  }
+  .px-nav .px-nav-item.active a {
+    /* background-color: #89ABC2; */
+    background-color: #14497b;
+  }
+  .px-nav .px-nav-tooltip {
+    /* background-color: #89ABC2; */
+    background-color: #14497b;
+  }
+  .px-nav .px-nav-tooltip:before {
+    /* border-left-color: #89ABC2;
+    border-right-color: #89ABC2; */
+    border-left-color: #14497b;
+    border-right-color: #14497b;
+  }
+  .px-nav-content>.px-nav-item>a {
+    border-bottom: 0px solid #4D565C;
+  }
+  .px-nav-toggle {
+      background-color: #0E365B;
+  }
+  
+  .nav.nav-tabs>li.active>a {
+      background-color: #0E365B;
+      border-bottom-color: #0E365B !important;
+  }
+</style>
+
+<button type="button" class="px-nav-toggle" data-toggle="px-nav">
+  <span class="px-nav-toggle-arrow"></span>
+  <span class="navbar-toggle-icon"></span>
+  <span class="px-nav-toggle-label font-size-11">隱藏選單</span>
+</button>
+
+<ul class="px-nav-content">
+  <li class="px-nav-item" ui-sref-active="active">
+    <a ui-sref="main.dashboard"><i class="px-nav-icon fa fa-dashboard"></i><span class="px-nav-label">Dashboard</span></a>
+  </li>
+  <li class="px-nav-item" ng-class="{active: $state.includes('main.monitor') || $state.includes('main.monitorSingle')}">
+    <a ui-sref="main.monitor"><i class="px-nav-icon fa fa-stethoscope"></i><span class="px-nav-label">感測器列表</span></a>
+  </li>
+  <li class="px-nav-item" ng-class="{active: $state.includes('main.fan') || $state.includes('main.fanSingle')}">
+    <a ui-sref="main.fan"><i class="px-nav-icon fa fa-magic"></i><span class="px-nav-label">靜電風扇列表</span></a>
+  </li>
+  <li class="px-nav-item" ng-class="{active: $state.includes('main.rmg') || $state.includes('main.rmgSingle')}">
+    <a ui-sref="main.rmg"><i class="px-nav-icon fa fa-bolt"></i><span class="px-nav-label">接地感測列表</span></a>
+  </li>
+  <li class="px-nav-item" ui-sref-active="active">
+    <a ui-sref="main.setting"><i class="px-nav-icon fa fa-gavel"></i><span class="px-nav-label">設備編輯</span></a>
+  </li>
+  <li class="px-nav-item" ui-sref-active="active">
+    <a ui-sref="main.user"><i class="px-nav-icon fa fa-wrench"></i><span class="px-nav-label">使用者管理</span></a>
+  </li>
+  <li class="px-nav-item" ui-sref-active="active">
+    <a ui-sref="main.sysset"><i class="px-nav-icon fa fa-cog"></i><span class="px-nav-label">系統設定</span></a>
+  </li>
+</ul>
+
+<div class="version_wrapper" style="position: absolute; width: 56px; bottom: 0; left: 0; color: #FFF; text-align: center;">
+  <p class="logo" style="color:#0E365B">Wincker</p>
+  <p class="version">V1.0</p>
+</div>

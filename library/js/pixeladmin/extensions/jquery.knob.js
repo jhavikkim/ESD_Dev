@@ -1,0 +1,1 @@
+!function(t){"use strict";if(!t.fn.knob)throw new Error("jquery.knob.js required.");var i=t.fn.knob;t.fn.knob=function(r){var n=i.call(this,r);return"rtl"===t("html").attr("dir")?n.each(function(){var r=t(this).find("input");r.css({"margin-left":0,"margin-right":r.css("margin-left")})}):n}}(jQuery);

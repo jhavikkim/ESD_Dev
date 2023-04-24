@@ -1,0 +1,567 @@
+<!-- Custom styling -->
+<style>
+  .panel-bg {
+    background-color: #DDD;
+  }
+
+  .panel-heading.bg-info {
+      background-color: #0E365B !important;
+      border-color: #0E365B !important;
+  }
+
+  .panel-heading.bg-primary, .panel-heading.bg-warning {
+      background-color: #89ABC2 !important;
+      border-color: #89ABC2 !important;
+  }
+
+  .px-content-bg {
+    background-color: #EFEFEF;
+  }
+
+  .modal-header {
+    background-color: #DDD !important;
+    border-color: #DDD !important;
+  }
+
+  .btn-label, .modal-title, .popover-title {
+    color: #333;
+  }
+
+  .modal-body {
+    background-color: #EFEFEF;
+  }
+
+  .btn-primary {
+    background-color: #0E365B !important;
+    border-color: #0E365B;
+  }
+
+  button.panel-btn {
+    background-color: transparent !important;
+  }
+
+  .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    background-color: transparent !important;
+  }
+
+  .btn-default {
+    color: #444;
+    background-color: #FFF;
+    border-color: #FFF;
+  }
+
+  .btn-default,
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-warning,
+  .btn-danger {
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      -moz-box-shadow:    0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      box-shadow:         0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  }
+
+  .table-filter, .table-filter-last {
+    margin-bottom: 0px;
+  }
+
+  .panel-heading {
+      padding: 5px 10px;
+  }
+
+  .panel-heading .panel-title {
+      display: inline-block;
+      vertical-align: middle;
+      width: calc(100% - 37px);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+  }
+
+  .panel-item {
+    box-shadow: 2px 3px 0px 0px #e3e3e3;
+    background-color: #EFEFEF;
+    border: none !important;
+  }  
+
+  .panel-location {
+      width: 100%;
+      height: 32px;
+      padding: 5px 0 !important;
+      overflow: hidden;
+  }
+
+  .warning-value {
+    background: rgba(255, 208, 85, 0.8);
+  }
+
+  .danger-value {
+    background: rgba(255, 0, 0, 0.8);
+  }
+
+  .pause {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.2);
+  }
+
+  .offline {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 0, 0, 0.2);
+    border: 3px solid rgba(255, 0, 0, 0.3);
+  }
+
+  .chart-content-height{
+    height: 220px;
+    width: 100%;
+  }
+
+  .daterangepicker {
+    z-index: 9999;
+  }
+
+  /* list item icons */
+  .listItemSm {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: auto;
+    margin: 0 10px 10px 0;
+  }
+
+  .listItemSm .itemIcon {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .listItemSm .itemIndex {
+    position: absolute;
+    border: 1px solid #000;
+    top: 1px;
+    left: 1px;
+    background-color: #FFF;
+    color: #000;
+    text-align: center;
+    line-height: 1;
+    padding: 1px;
+  }
+  
+  .daterangepicker-filter {
+    background-color: #FEFEFE !important;
+  }
+  
+  .daterangepicker .calendar th, .daterangepicker select:focus, .dropzone-box.dz-drag-hover, .timepicker-decrement:focus, .timepicker-decrement:hover, .timepicker-increment:focus, .timepicker-increment:hover {
+    border-color: #0E365B;
+  }
+  
+  .daterangepicker .calendar td.active, .daterangepicker .calendar th, .daterangepicker .ranges .active, .daterangepicker .ranges li:focus, .daterangepicker .ranges li:hover, .px-irs-primary .irs-from, .px-irs-primary .irs-single, .px-irs-primary .irs-to {
+    background-color: #0E365B;
+  }
+
+  .daterangepicker .calendar thead tr+tr th {
+    background-color: #0E365B !important;
+    border-top-color: #0E365B !important;
+  }
+</style>
+<!-- / Custom styling -->
+
+<ol class="breadcrumb page-breadcrumb m-b-0">
+  <li class="active">感測器列表</li>
+  <span class="active m-l-2" style="float: right">顯示設備數量：<span ng-bind="result.length"></span></span>
+  <span class="active m-l-2" style="float: right"> ｜ </span>
+  <span class="active" style="float: right">
+    <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+    ng-click="viewCtrl.orderByColume('location')">地點</button>
+  </span>
+  <span class="active" style="float: right">
+    <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+    ng-click="viewCtrl.orderByColume('model')">設備</button>
+  </span>
+  <span class="active" style="float: right">
+    <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+    ng-click="viewCtrl.orderByColume('name')">名稱</button>
+  </span>
+  <span class="active" style="float: right">
+    <button class="btn btn-xs btn-primary p-y-0 m-x-1" 
+    ng-click="viewCtrl.orderByColume('uid')">時間</button>
+  </span>
+  <span class="active m-l-2" style="float: right">排序：</span>
+  <span class="active m-l-2" style="float: right"> ｜ </span>
+  <span class="active" style="float: right">狀態：
+    [<span>正常</span>] [<span class="warning-value">告警</span>] [<span class="danger-value">警示</span>] 
+    [<span style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 0, 0, 0.8);">離線</span>] [<span style="background: rgba(0, 0, 0, 0.3);">暫停</span>]
+  </span>
+</ol>
+
+<div class="page-header m-t-0" ng-show="viewCtrl.viewData.length <= 24">
+  <div class="row">
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <input type="text" class="form-control" id="search_input" placeholder="智慧搜尋" ng-model="viewCtrl.searchText.$">
+      </div>
+    </div>
+
+    <div class="col-md-3 text-xs-center text-md-left text-nowrap">
+      <div class="form-group table-filter">
+        <select class="custom-select form-control" ng-model="viewCtrl.searchText.status">
+          <option value="">狀態篩選</option>
+          <option value="1">正常</option>
+          <option value="2">告警</option>
+          <option value="3">警示</option>
+          <option value="4">離線</option>
+          <option value="5">暫停</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="panel panel-bg m-b-0 m-t-2">
+  <div class="panel-body">
+    <div class="row">
+
+      <a ui-sref="main.monitorSingle({searchText:viewData.name})" class="listItemSm" ng-class="{ 'item_online': viewData.status==1, 'item_warning': viewData.status==2, 'item_danger': viewData.status==3, 'item_offline': viewData.status==4, 'item_pause': viewData.status==5 }" ng-repeat="viewData in viewCtrl.viewData | orderBy: viewCtrl.sortColumn: viewCtrl.reverse | filter: viewCtrl.searchText | 
+      searchFilter: viewCtrl.searchLocation.location | searchFilter: viewCtrl.searchModel.model as result" ng-show="viewData.use==1 && viewCtrl.viewData.length > 24" title={{viewData.name}}>
+        <img src="images/equip/icons/esd/online.png" class="itemIcon" alt="viewData.name" ng-show="viewData.status==1">
+        <img src="images/equip/icons/esd/warning.png" class="itemIcon" alt="viewData.name" ng-show="viewData.status==2">
+        <img src="images/equip/icons/esd/danger.png" class="itemIcon" alt="viewData.name" ng-show="viewData.status==3">
+        <img src="images/equip/icons/esd/offline.png" class="itemIcon" alt="viewData.name" ng-show="viewData.status==4">
+        <img src="images/equip/icons/esd/pause.png" class="itemIcon" alt="viewData.name" ng-show="viewData.status==5">
+        <span class="itemIndex">{{$index+1}}</span>
+      </a>
+      
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6" ng-repeat="viewData in viewCtrl.viewData | orderBy: viewCtrl.sortColumn: viewCtrl.reverse | filter: viewCtrl.searchText | 
+      searchFilter: viewCtrl.searchLocation.location | searchFilter: viewCtrl.searchModel.model as result" ng-show="viewData.use==1 && viewCtrl.viewData.length <= 24">
+
+
+        <div class="panel panel-item " ng-hide="viewData.isfan>=1" 
+          ng-class="{ 'warning-value': viewData.status==2, 'danger-value': viewData.status==3, 'offline': viewData.status==4, 'pause': viewData.status==5 }">
+          <div class="panel-heading" ng-class="{ 'bg-warning': viewData.model=='溫度感測器', 'bg-primary': viewData.model=='濕度感測器', 'bg-success': viewData.model=='接地感測器', 'bg-info': viewData.model=='靜電感測器' }" >
+            
+            <!-- <img ng-src="images/equip/esd-black.png" style="vertical-align: middle; height: 20px; float: left"> -->
+            <span class="panel-title h3 font-size-20" ng-bind="viewData.name" title="{{viewData.name}}"></span>
+            <button class="btn btn-sm btn-outline" style="vertical-align: middle; float: right" ng-click="viewCtrl.toContentModal(viewData.uid)">
+              <i class="fa fa-info" style="color: #fff"></i>
+            </button>
+          </div>
+          <div class="panel-body p-t-1" style="height: 60px">
+            <div class="text-xs-center" style="line-height: 50px;">
+              <span class="font-size-34 font-weight-bold" ng-bind="viewData.value"></span>
+              <span class="font-size-28 font-weight-bold" ng-bind="viewData.unit"></span>
+            </div>
+          </div>
+          <div class="panel-body" style="height: 60px">
+            <div class="box-cell border-panel font-size-16" style="border: 1px solid">
+              <div class="box-container" style="height: 35px">
+                <div class="box-row" ng-hide="viewData.warning_min==0 && viewData.warning_max==0">
+                  <div class="box-cell p-t-0 valign-middle text-center">
+                    <i class="box-icon p-l-1 pull-xs-left text-danger">±</i>
+                    <span ng-bind="viewData.warning_max"></span> | <span ng-bind="viewData.alert_max"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body p-y-0" >
+            <button type="button" class="btn btn-default btn-block panel-btn" ng-click="viewCtrl.setAlarmBuzzer(viewData.uid, viewData.rmID, viewData.rmIP)" ng-disabled="{{viewData.status == 2 || viewData.status == 3 || viewData.status == 4}}">關閉警報</button>
+          </div>
+          <div class="panel-body p-y-1 bg-transparent text-center panel-location" title="{{viewData.location}}">
+            <span class="panel-title"><i class="panel-title-icon fa fa-map-marker"></i>
+              <span ng-bind="viewData.location1" class="panel-title h2 font-size-20" ></span>-<span ng-bind="viewData.location2" class="panel-title h2 font-size-20" ></span>-<span ng-bind="viewData.location3" class="panel-title h2 font-size-20" ></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SENSOR Modal -->
+<div class="modal fade" id="modal-sensor" tabindex="-1" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title" ng-bind="viewCtrl.sensorData.model"></span></h4>
+      </div>
+      <div class="modal-body p-b-0">
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <div class="col-md-1">
+              <p class="form-control-static"><i class="panel-title-icon fa fa-dashboard font-size-18"></i></p>
+            </div>
+            <div class="col-md-9">
+              <p class="form-control-static" ng-bind="viewCtrl.sensorData.model"></p>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-warning btn-block" ng-click="viewCtrl.getListContent(viewCtrl.sensorData.uid)" ng-hide="auth<2">設定</button>
+            </div>
+          </div>
+          <div class="col-sm-4 col-sm-offset-1">
+            <div class="col-xs-12 text-center">
+              <span class="font-size-46 font-weight-bold" ng-bind="viewCtrl.sensorData.value"></span>
+              <span class="font-size-28 font-weight-bold" ng-bind="viewCtrl.sensorData.unit"></span>
+            </div>
+            <div class="box-cell border-panel font-size-16 border-panel" style="border: 1px solid">
+              <div class="box-container">
+                <div class="box-row">
+                  <div class="box-cell p-t-1 valign-middle text-center">
+                    <span ng-bind="viewCtrl.sensorData.warning_min"></span> / <span ng-bind="viewCtrl.sensorData.warning_max"></span>
+                    <i class="box-icon p-l-3 pull-xs-left fa fa-warning text-warning"></i>
+                  </div>
+                </div>
+                <div class="box-row">
+                  <div class="box-cell p-y-1 valign-middle text-center">
+                    <span ng-bind="viewCtrl.sensorData.alert_min"></span> / <span ng-bind="viewCtrl.sensorData.alert_max"></span>
+                    <i class="box-icon p-l-3 pull-xs-left fa fa-bomb text-danger"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="col-sm-12 form-group">
+              <div class="col-md-3">
+                <p class="form-control-static text-right">名稱：</p>
+              </div>
+              <div class="col-md-9">
+                <p class="form-control-static content-underline" ng-bind="viewCtrl.sensorData.name"></p>
+              </div>
+            </div>
+            <div class="col-sm-12 form-group">
+              <div class="col-md-3">
+                <p class="form-control-static text-right">ID：</p>
+              </div>
+              <div class="col-md-9">
+                <p class="form-control-static content-underline" ng-bind="viewCtrl.sensorData.rmID+'('+viewCtrl.sensorData.port+')'"></p>
+              </div>
+            </div>
+            <div class="col-sm-12 form-group">
+              <div class="col-md-3">
+                <p class="form-control-static text-right">IP：</p>
+              </div>
+              <div class="col-md-9">
+                <p class="form-control-static content-underline" ng-bind="viewCtrl.sensorData.rmIP"></p>
+              </div>
+            </div>
+            <div class="col-sm-12 form-group">
+              <div class="col-md-3">
+                <p class="form-control-static text-right">
+                  <i class="fa fa-map-marker"></i><span> ：</span>
+                </p>
+              </div>
+              <div class="col-md-9">
+                <p class="form-control-static content-underline">
+                  <span ng-bind="viewCtrl.sensorData.location"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body p-y-0">
+        <div class="panel-body">
+          <ul class="nav nav-tabs" ng-init="tabsDrdnActive = 1">
+            <li ng-class="{active: tabsDrdnActive === 1}" class="active">
+              <a href="" ng-click="tabsDrdnActive = 1">
+                當日資料檢視 
+              </a>
+            </li>
+            <li ng-class="{active: tabsDrdnActive === 2}">
+              <a href="" ng-click="tabsDrdnActive = 2">
+                歷史資料查詢 
+              </a>
+            </li>
+            <li ng-class="{active: tabsDrdnActive === 3}">
+              <a href="" ng-click="tabsDrdnActive = 3">
+                歷史警示查詢 
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content tab-content-bordered">
+            <div class="tab-pane fade in active" ng-class="{'in active': tabsDrdnActive === 1}">
+              <div style="height: 32px"></div>
+              <div class="chart-content-height" id="today-chart">
+              </div>
+              <div style="height: 32px" class="text-right m-t-1"></div>
+            </div>
+            <div class="tab-pane fade" ng-class="{'in active': tabsDrdnActive === 2}">
+              <div style="height: 32px">
+                <div class="form-group table-filter">
+                  <button daterangepicker locale="daterangepickerLocale" 
+                          start-date="setups.range.startDate" end-date="setups.range.endDate" 
+                          ranges="viewCtrl.ranges" callback="viewCtrl.rangeCallback" 
+                          id="daterangepicker-btn" class="btn btn-outline dropdown-toggle daterangepicker-filter">
+                  </button>
+                </div>
+              </div>
+              <div class="chart-content-height" id="history-chart">
+              </div>
+              <div style="height: 32px" class="text-right m-t-1">
+                <button type="button" class="btn btn-success m-r-2" ng-click="viewCtrl.downloadRangeCSV(viewCtrl.sensorData.name, viewCtrl.sensorData.uid, viewCtrl.sensorData.rmID, viewCtrl.sensorData.port)">匯出</button>
+              </div>
+            </div>
+            <div class="tab-pane fade" ng-class="{'in active': tabsDrdnActive === 3}">
+              <div style="height: 32px">
+                <div class="form-group table-filter">
+                  <button daterangepicker locale="daterangepickerLocale" 
+                          start-date="setups.range.startDate" end-date="setups.range.endDate" 
+                          ranges="viewCtrl.ranges" callback="viewCtrl.rangeCallback" 
+                          id="daterangepicker-alert" class="btn btn-outline dropdown-toggle daterangepicker-filter">
+                  </button>
+                </div>
+              </div>
+              <div class="chart-content-height" id="alert-chart">
+              </div>
+              <div style="height: 32px" class="text-right m-t-1">
+                <!-- <button type="button" class="btn m-r-2">匯出</button> -->
+                <button type="button" class="btn btn-success m-r-2" ng-click="viewCtrl.downloadAlarmRangeCSV(viewCtrl.sensorData.name, viewCtrl.sensorData.uid, viewCtrl.sensorData.rmID, viewCtrl.sensorData.port)">匯出</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Alert Modal -->
+<div id="modal-alert" class="modal fade modal-alert modal-danger">
+  <div class="modal-dialog" style="margin: 25% auto">
+    <div class="modal-content">
+      <div class="modal-header"><i class="fa fa-times-circle"></i></div>
+      <div class="modal-title">日期區間錯誤</div>
+      <div class="modal-body">超過30天，請重新選擇</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 修改感測器 -->
+<div class="modal" id="modal-modify">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">修改資訊</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-xs-2 control-label">RM Type</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="viewCtrl.itemData.rmType"></p>
+            </div>
+            <label class="col-xs-2 control-label">RM Port</label>
+            <div class="col-xs-4">
+              <p class="form-control-static" ng-bind="viewCtrl.itemData.port"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">RM IP</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="viewCtrl.itemData.rmIP" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Name</label>
+            <div class="col-md-10">
+              <input type="input" class="form-control" ng-model="viewCtrl.itemData.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Sensor</label>
+            <div class="col-md-4">
+              <p class="form-control-static" ng-bind="viewCtrl.itemData.type"></p>
+            </div>
+            <label class="col-md-2 control-label">Unit</label>
+            <div class="col-md-4">
+              <p class="form-control-static" ng-bind="viewCtrl.itemData.unit"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">告警上限</label>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="viewCtrl.itemData.warning_max">
+            </div>
+            <label class="col-md-2 control-label">告警下限</label>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="viewCtrl.itemData.warning_min">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">警示上限</label>
+            <div class="col-md-4">
+              <input type="number" class="form-control" ng-model="viewCtrl.itemData.alert_max">
+            </div>
+            <label class="col-md-2 control-label">警示下限</label>
+            <div class="col-md-4">
+              <input type="number" class="form-control" ng-model="viewCtrl.itemData.alert_min">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+              <input type="checkbox" ng-model="viewCtrl.isUpdate" ng-true-value="1" ng-false-value="0"> 同時更新硬體設定?
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Location</label>
+            <div class="col-md-3">
+              <input type="input" class="form-control" ng-model="viewCtrl.itemData.location1">
+            </div>
+            <div class="col-md-3">
+              <input type="input" class="form-control" ng-model="viewCtrl.itemData.location2">
+            </div>
+            <div class="col-md-4">
+              <input type="input" class="form-control" ng-model="viewCtrl.itemData.location3">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">啟用</label>
+            <div class="col-md-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="viewCtrl.itemData.use" ng-true-value="1" ng-false-value="0"> 勾選以啟用
+                </label>
+              </div>
+            </div>
+            <label class="col-md-2 control-label">暫停</label>
+            <div class="col-md-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="viewCtrl.itemData.pause" ng-true-value="1" ng-false-value="0"> 勾選暫停收集數據
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="viewCtrl.modifyContent()">儲存並關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Alert Modal -->
+<div id="modal-edit-alert" class="modal fade modal-alert modal-danger">
+  <div class="modal-dialog" style="margin: 25% auto">
+    <div class="modal-content">
+      <div class="modal-header"><i class="fa fa-times-circle"></i></div>
+      <div class="modal-title">rmIP重複</div>
+      <div class="modal-body">請重新輸入</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
